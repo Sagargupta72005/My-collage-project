@@ -48,7 +48,7 @@ function App() {
 
         {/* Entry */}
         <Route path="/" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
 
         {/* DASHBOARD */}
         <Route
