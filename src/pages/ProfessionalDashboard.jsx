@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import MainLayout from "../components/layouts/MainLayout";
 import StatsCards from "../components/StatsCards";
 import WeeklyChart from "../components/WeeklyChart";
-import TaskSection from "../components/TaskSection";
 
 function ProfessionalDashboard() {
   const role = localStorage.getItem("role");
@@ -12,46 +11,134 @@ function ProfessionalDashboard() {
   const [tasks, setTasks] = useState([]);
   const [notifications, setNotifications] = useState([]);
 
+  const [newTask, setNewTask] = useState("");
+  const [newDate, setNewDate] = useState("");
+
+  const [editingId, setEditingId] = useState(null);
+  const [editText, setEditText] = useState("");
+
+  // Load Tasks
   useEffect(() => {
     const loadTasks = () => {
-      const saved = JSON.parse(localStorage.getItem(storageKey));
-      if (saved) setTasks(saved);
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey)) || [];
+        setTasks(saved);
+      } catch {
+        setTasks([]);
+      }
     };
 
     loadTasks();
     window.addEventListener("storage", loadTasks);
-
     return () => window.removeEventListener("storage", loadTasks);
   }, [storageKey]);
 
+  // Save helper
+  const saveTasks = (updated) => {
+    setTasks(updated);
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+  };
+
+  // Notifications
   useEffect(() => {
-    let notes = [];
+    const notes = [];
     const today = new Date();
 
-    tasks.forEach(t => {
+    tasks.forEach((t) => {
       if (!t.dueDate || t.done) return;
 
       const due = new Date(t.dueDate);
 
       if (due < today) {
-        notes.push("⚠️ Task overdue");
+        notes.push(`⚠️ "${t.title}" is overdue`);
       } else if (due.toDateString() === today.toDateString()) {
-        notes.push("⏰ Task due today");
+        notes.push(`⏰ "${t.title}" is due today`);
       }
     });
 
     setNotifications(notes);
   }, [tasks]);
 
+  // Add Task
+  const handleAddTask = () => {
+    if (!newTask.trim()) return;
+
+    const task = {
+      id: Date.now(),
+      title: newTask,
+      done: false,
+      dueDate: newDate || null,
+    };
+
+    saveTasks([...tasks, task]);
+    setNewTask("");
+    setNewDate("");
+  };
+
+  // Delete
+  const handleDelete = (id) => {
+    const updated = tasks.filter((t) => t.id !== id);
+    saveTasks(updated);
+  };
+
+  // Toggle complete
+  const toggleComplete = (id) => {
+    const updated = tasks.map((t) =>
+      t.id === id ? { ...t, done: !t.done } : t
+    );
+    saveTasks(updated);
+  };
+
+  // Start edit
+  const startEdit = (task) => {
+    setEditingId(task.id);
+    setEditText(task.title);
+  };
+
+  // Save edit
+  const saveEdit = (id) => {
+    const updated = tasks.map((t) =>
+      t.id === id ? { ...t, title: editText } : t
+    );
+    saveTasks(updated);
+    setEditingId(null);
+  };
+
+  const today = new Date();
+
   return (
     <MainLayout>
-
       <h1 className="text-2xl font-bold mb-6">
         Professional Dashboard
       </h1>
 
+      {/* Add Task */}
+      <div className="flex bg-white p-5 shadow rounded-xl gap-2 mb-6">
+        <input
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+          className="border border-gray-400 p-2 flex-1 rounded-xl"
+          placeholder="Task title..."
+        />
+
+        <input
+          type="date"
+          value={newDate}
+          onChange={(e) => setNewDate(e.target.value)}
+          className="border border-gray-400 p-2 rounded-xl"
+        />
+
+        <button
+          onClick={handleAddTask}
+          className="bg-blue-500 text-white px-4 rounded-xl"
+        >
+          Add
+        </button>
+      </div>
+
       <StatsCards tasks={tasks} />
 
+      {/* Notifications */}
       {notifications.length > 0 && (
         <div className="mb-6 space-y-2">
           {notifications.map((n, i) => (
@@ -62,12 +149,81 @@ function ProfessionalDashboard() {
         </div>
       )}
 
+      {/* Task List */}
+      <div className="p-4 bg-white shadow rounded mb-6">
+        <h2 className="font-bold mb-3">All Tasks</h2>
+
+        {tasks.map((t) => {
+          const isOverdue =
+            t.dueDate && !t.done && new Date(t.dueDate) < today;
+
+          return (
+            <div
+              key={t.id}
+              className={`flex items-center justify-between border-b py-2 ${
+                t.done ? "opacity-50 line-through" : ""
+              }`}
+            >
+              {/* Left */}
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={t.done}
+                  onChange={() => toggleComplete(t.id)}
+                />
+
+                {editingId === t.id ? (
+                  <input
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
+                    className="border px-2"
+                  />
+                ) : (
+                  <span>{t.title}</span>
+                )}
+
+                {t.dueDate && (
+                  <span
+                    className={`text-xs ml-2 ${
+                      isOverdue ? "text-red-500" : "text-gray-500"
+                    }`}
+                  >
+                    ({t.dueDate})
+                  </span>
+                )}
+              </div>
+
+              {/* Right Actions */}
+              <div className="flex gap-2">
+                {editingId === t.id ? (
+                  <button
+                    onClick={() => saveEdit(t.id)}
+                    className="text-green-600"
+                  >
+                    Save
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => startEdit(t)}
+                    className="text-blue-600"
+                  >
+                    Edit
+                  </button>
+                )}
+
+                <button
+                  onClick={() => handleDelete(t.id)}
+                  className="text-red-600"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
       <WeeklyChart tasks={tasks} />
-
-      <TaskSection title="Work Tasks" />
-
-      
-
     </MainLayout>
   );
 }

@@ -47,8 +47,8 @@ function App() {
       <Routes>
 
         {/* Entry */}
-        <Route path="/" element={<Signup />} />
-        {/* <Route path="/login" element={<Login />} /> */}
+        {/* <Route path="/" element={<Signup />} /> */}
+        <Route path="/login" element={<Login />} />
 
         {/* DASHBOARD */}
         <Route

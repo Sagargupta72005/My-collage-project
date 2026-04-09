@@ -16,7 +16,7 @@ function Sidebar() {
       {/* Logo / Brand */}
       <div className="px-5 py-4 border-b">
         <h2 className="text-2xl font-bold text-blue-600 tracking-tight">
-          Smart Dashboard
+          limit less
         </h2>
         <p className="text-xs text-gray-400 mt-1">
           {(role || "user").toUpperCase()} PANEL
