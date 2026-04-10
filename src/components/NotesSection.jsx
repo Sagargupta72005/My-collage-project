@@ -27,29 +27,36 @@ function NotesSection() {
     localStorage.setItem(storageKey, JSON.stringify(notes));
   }, [notes, storageKey]);
 
+  const resetEditor = () => {
+    setTitle("");
+    setCurrentNote("");
+    setActiveId(null);
+    setAiOutput("");
+  };
+
   const handleSaveNote = () => {
     if (!currentNote.trim()) return;
 
-    if (activeId) {
-      setNotes(notes.map(n =>
-        n.id === activeId
-          ? { ...n, text: currentNote, title }
-          : n
-      ));
-    } else {
+    setNotes((prev) => {
+      if (activeId) {
+        return prev.map((n) =>
+          n.id === activeId
+            ? { ...n, text: currentNote, title: title || "Untitled Note" }
+            : n
+        );
+      }
+
       const newNote = {
         id: Date.now(),
         title: title || "Untitled Note",
         text: currentNote,
-        createdAt: new Date().toLocaleString()
+        createdAt: new Date().toLocaleString(),
       };
-      setNotes([newNote, ...notes]);
-    }
 
-    setCurrentNote("");
-    setTitle("");
-    setActiveId(null);
-    setAiOutput("");
+      return [newNote, ...prev];
+    });
+
+    resetEditor();
   };
 
   const handleEditNote = (note) => {
@@ -62,19 +69,23 @@ function NotesSection() {
 
   const handleDeleteNote = (id) => {
     if (window.confirm("Delete this note?")) {
-      setNotes(notes.filter(n => n.id !== id));
+      setNotes((prev) => prev.filter((n) => n.id !== id));
     }
   };
 
   // 🤖 Fake AI
   const handleSummarize = () => {
-    if (!currentNote) return;
-    const summary = currentNote.split(".").slice(0, 2).join(".") + "...";
+    if (!currentNote.trim()) return;
+
+    const summary =
+      currentNote.split(".").slice(0, 2).join(".").trim() + "...";
+
     setAiOutput("Summary: " + summary);
   };
 
   const handleImprove = () => {
-    if (!currentNote) return;
+    if (!currentNote.trim()) return;
+
     const improved = currentNote
       .replace(/\bi\b/g, "I")
       .replace(/\bim\b/g, "I'm")
@@ -84,17 +95,12 @@ function NotesSection() {
   };
 
   return (
-    <div className="bg-slate-50 border border-slate-200 p-5 rounded-xl shadow-sm">
-
-      {/* Header */}
+    <div className="p-5 rounded-xl  shadow h-full">
       <h2 className="text-lg font-semibold text-slate-700 mb-4">
-       Notes 
+        Notes
       </h2>
 
-      {/* Editor */}
       <div className="mb-6">
-
-        {/* ✅ Title Input */}
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -110,7 +116,6 @@ function NotesSection() {
                      focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
-        {/* AI Buttons */}
         <div className="flex gap-2 mt-2">
           <button
             onClick={handleSummarize}
@@ -127,7 +132,6 @@ function NotesSection() {
           </button>
         </div>
 
-        {/* AI Output */}
         {aiOutput && (
           <div className="mt-3 p-2 bg-white border rounded text-sm text-slate-600">
             {aiOutput}
@@ -148,9 +152,8 @@ function NotesSection() {
         </div>
       </div>
 
-      {/* Library */}
       <div>
-        <h3 className="text-sm font-semibold text-slate-500 mb-2">
+        <h3 className="text-sm font-semibold  text-slate-500 mb-2">
           Saved Notes
         </h3>
 
@@ -160,13 +163,12 @@ function NotesSection() {
           </p>
         )}
 
-        <div className="grid gap-3">
+        <div className="grid gap-3 h-30 overflow-y-scroll">
           {notes.map((note) => (
             <div
               key={note.id}
-              className="p-3 border rounded-lg bg-white hover:shadow-sm transition"
+              className="p-3 border rounded-lg  bg-white hover:shadow-sm transition"
             >
-              {/* ✅ Title Display */}
               <h4 className="font-semibold text-slate-800 text-sm">
                 {note.title}
               </h4>
@@ -197,7 +199,6 @@ function NotesSection() {
             </div>
           ))}
         </div>
-
       </div>
     </div>
   );

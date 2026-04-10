@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "font1";
+  src: url("../src/assets/fonts/machine-script/MachineScript.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "font2";
+  src: url("../src/assets/fonts/chamos/CHAMOS.otf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}

@@ -1,23 +1,26 @@
+import { useState } from "react";
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
 
 function MainLayout({ children }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen  bg-gray-100 w-full">
 
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar open={open} setOpen={setOpen} />
 
       {/* Right Side */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex overflow-y-scroll flex-col">
 
         {/* Navbar */}
-        <Navbar />
+        <Navbar onMenuClick={() => setOpen(true)} />
 
-        {/* Page Content */}
-        <div className="p-6 overflow-y-auto">
+        {/* Content */}
+        <main className="flex-1 p-4 md:p-6 ">
           {children}
-        </div>
+        </main>
 
       </div>
     </div>

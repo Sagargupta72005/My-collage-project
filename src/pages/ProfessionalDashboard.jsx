@@ -108,12 +108,12 @@ function ProfessionalDashboard() {
 
   return (
     <MainLayout>
-      <h1 className="text-2xl font-bold mb-6">
+      <h1 className="text-xl sm:text-2xl font-bold mb-6">
         Professional Dashboard
       </h1>
 
       {/* Add Task */}
-      <div className="flex bg-white p-5 shadow rounded-xl gap-2 mb-6">
+      <div className="flex flex-col sm:flex-row bg-white p-4 sm:p-5 shadow rounded-xl gap-2 mb-6">
         <input
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
@@ -125,12 +125,12 @@ function ProfessionalDashboard() {
           type="date"
           value={newDate}
           onChange={(e) => setNewDate(e.target.value)}
-          className="border border-gray-400 p-2 rounded-xl"
+          className="border border-gray-400 p-2 rounded-xl w-full sm:w-auto"
         />
 
         <button
           onClick={handleAddTask}
-          className="bg-blue-500 text-white px-4 rounded-xl"
+          className="bg-blue-500 text-white px-4 py-2 rounded-xl w-full sm:w-auto"
         >
           Add
         </button>
@@ -150,7 +150,7 @@ function ProfessionalDashboard() {
       )}
 
       {/* Task List */}
-      <div className="p-4 bg-white shadow rounded mb-6">
+      <div className="p-3 sm:p-4 bg-white shadow rounded mb-6 max-h-[400px] overflow-y-auto">
         <h2 className="font-bold mb-3">All Tasks</h2>
 
         {tasks.map((t) => {
@@ -160,12 +160,12 @@ function ProfessionalDashboard() {
           return (
             <div
               key={t.id}
-              className={`flex items-center justify-between border-b py-2 ${
+              className={`flex flex-col sm:flex-row sm:items-center sm:justify-between border-b py-3 gap-2 ${
                 t.done ? "opacity-50 line-through" : ""
               }`}
             >
               {/* Left */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-start sm:items-center gap-2 flex-wrap">
                 <input
                   type="checkbox"
                   checked={t.done}
@@ -179,12 +179,12 @@ function ProfessionalDashboard() {
                     className="border px-2"
                   />
                 ) : (
-                  <span>{t.title}</span>
+                  <span className="break-words">{t.title}</span>
                 )}
 
                 {t.dueDate && (
                   <span
-                    className={`text-xs ml-2 ${
+                    className={`text-xs ${
                       isOverdue ? "text-red-500" : "text-gray-500"
                     }`}
                   >
@@ -194,7 +194,7 @@ function ProfessionalDashboard() {
               </div>
 
               {/* Right Actions */}
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap sm:flex-nowrap">
                 {editingId === t.id ? (
                   <button
                     onClick={() => saveEdit(t.id)}

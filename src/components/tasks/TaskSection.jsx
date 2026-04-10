@@ -202,7 +202,7 @@ const TaskSection = () => {
 
         {/* NOTES & CALCULATOR */}
         <div className="grid lg:grid-cols-2 gap-6">
-          <div className="bg-white rounded-xl shadow">
+          <div className=" bg-white rounded-xl shadow">
             <NotesSection />
           </div>
 

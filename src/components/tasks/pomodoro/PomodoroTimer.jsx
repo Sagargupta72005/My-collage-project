@@ -58,10 +58,10 @@ const PomodoroTimer = () => {
   };
 
   return (
-    <div className="w-full p-8 bg-white rounded-xl shadow-lg flex flex-col md:flex-row gap-6">
+    <div className="w-full p-6 bg-white rounded-xl shadow-lg flex flex-col md:flex-row gap-6">
       {/* Left Panel: Timer */}
       <div className="flex-1 flex flex-col items-center justify-center gap-4">
-        <div className="text-5xl font-mono text-gray-800">{formatTime()}</div>
+        <div className="text-5xl font-[font1] text-gray-800">{formatTime()}</div>
         <p className="text-gray-500 text-sm font-medium">{mode}</p>
 
         <div className="flex justify-center gap-3 mt-2">
@@ -113,15 +113,15 @@ const PomodoroTimer = () => {
         />
 
         {/* Custom Times */}
-        <div className="flex flex-col gap-2 border p-3 rounded-lg bg-gray-50">
+        <div className="flex flex-col gap-2 border px-5 py-5 rounded-lg bg-gray-50">
           <span className="text-gray-600 text-sm font-medium">Custom Times (minutes)</span>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center justify-center">
             <input
               type="number"
               min={1}
               value={workMinutes}
               onChange={(e) => setWorkMinutes(Number(e.target.value))}
-              className="border p-1 rounded w-16 text-sm text-center"
+              className="border p-1 font-[font1] rounded w-16 text-sm text-center"
               placeholder="Work"
             />
             <input
@@ -129,7 +129,7 @@ const PomodoroTimer = () => {
               min={1}
               value={shortBreakMinutes}
               onChange={(e) => setShortBreakMinutes(Number(e.target.value))}
-              className="border p-1 rounded w-16 text-sm text-center"
+              className="border p-1 font-[font1] rounded w-16 text-sm text-center"
               placeholder="Short"
             />
             <input
@@ -137,16 +137,16 @@ const PomodoroTimer = () => {
               min={1}
               value={longBreakMinutes}
               onChange={(e) => setLongBreakMinutes(Number(e.target.value))}
-              className="border p-1 rounded w-16 text-sm text-center"
+              className="border p-1 font-[font1] rounded w-16 text-sm text-center"
               placeholder="Long"
             />
+          </div>
             <button
               onClick={applyCustomTimes}
               className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm"
             >
               Apply
             </button>
-          </div>
         </div>
       </div>
     </div>
