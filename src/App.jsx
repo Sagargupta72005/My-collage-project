@@ -8,8 +8,8 @@ import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import ProfessionalDashboard from "./pages/ProfessionalDashboard";
 
-import TaskSection from "./components/TaskSection";
 import Profile from "./pages/Profile";
+import TaskSection from "./components/tasks/TaskSection";
 
 function App() {
   const role = localStorage.getItem("role");

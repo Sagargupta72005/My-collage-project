@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
-import NotesSection from "./NotesSection";
-import NotesCalculator from "./NotesCalculator";
-import AIAssistant from "./AIAssistant";
-import MainLayout from "./layouts/MainLayout";
+import { useState, useEffect } from "react";
+import DailyPlanner from "./planner/DailyPlanner";
+import HabitTracker from "./habits/HabitTracker";
+import NotesSection from "../NotesSection";
+import NotesCalculator from "../NotesCalculator";
+import MainLayout from "../layouts/MainLayout";
+import PomodoroTimer from "./pomodoro/PomodoroTimer";
+import Dashboard from "./analytics/Dashboard";
 
 const TaskSection = () => {
   const role = localStorage.getItem("role");
@@ -14,6 +17,7 @@ const TaskSection = () => {
   // LOAD TASKS
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem(storageKey)) || [];
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTasks(saved);
   }, [storageKey]);
 
@@ -70,14 +74,13 @@ const TaskSection = () => {
 
   return (
     <MainLayout>
-    <div>
-
-
       <div className="flex-1 p-6 overflow-y-auto">
+
+        {/* TOP GRID: Tasks + Habits + Planner */}
         <div className="grid lg:grid-cols-3 gap-6 mb-6">
 
           {/* TASKS */}
-          <div className="bg-white p-5 rounded-xl shadow">
+          <div className="bg-white p-5 rounded-xl shadow h-90">
             <h2 className="text-lg font-semibold mb-4">Tasks</h2>
 
             <div className="flex gap-2 mb-4">
@@ -99,7 +102,7 @@ const TaskSection = () => {
             <h3 className="text-sm font-medium mb-2 text-gray-600">
               Pending
             </h3>
-            <div className="space-y-2 max-h-[200px] overflow-y-auto mb-4">
+            <div className="space-y-2 max-h-50 overflow-y-auto mb-4">
               {pendingTasks.map((t) => (
                 <div
                   key={t.id}
@@ -134,7 +137,7 @@ const TaskSection = () => {
             <h3 className="text-sm font-medium mb-2 text-green-600">
               Completed
             </h3>
-            <div className="space-y-2 max-h-[120px] overflow-y-auto">
+            <div className="space-y-2 max-h-30 overflow-y-auto">
               {completedTasks.length === 0 ? (
                 <p className="text-xs text-gray-400">
                   No completed tasks
@@ -176,26 +179,40 @@ const TaskSection = () => {
             )}
           </div>
 
-          {/* NOTES */}
+          {/* HABITS */}
+          <div className=" rounded-xl">
+            <HabitTracker />
+          </div>
+
+          {/* DAILY PLANNER */}
+          <div className="" >
+            <DailyPlanner />
+          </div>
+        </div>
+
+        {/* POMODORO TIMER */}
+        <div className="mb-6">
+          <PomodoroTimer />
+        </div>
+
+        {/* ANALYTICS DASHBOARD */}
+        <div className="bg-white p-5 rounded-xl shadow mb-6">
+          <Dashboard tasks={tasks} />
+        </div>
+
+        {/* NOTES & CALCULATOR */}
+        <div className="grid lg:grid-cols-2 gap-6">
           <div className="bg-white rounded-xl shadow">
             <NotesSection />
           </div>
 
-          {/* CALCULATOR */}
           <div className="bg-white p-4 rounded-xl shadow">
-            <h2 className="text-lg font-semibold mb-3">
-              Quick Calculator
-            </h2>
+            <h2 className="text-lg font-semibold mb-3">Quick Calculator</h2>
             <NotesCalculator />
           </div>
         </div>
-
-        {/* AI */}
-        <div className="bg-white rounded-xl shadow h-[500px]">
-          <AIAssistant />
-        </div>
+        
       </div>
-    </div>
     </MainLayout>
   );
 };

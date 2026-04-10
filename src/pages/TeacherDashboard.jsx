@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import MainLayout from "../components/layouts/MainLayout";
 import WeeklyChart from "../components/WeeklyChart";
-import TaskSection from "../components/TaskSection";
 
 // Teacher Components
 import OverallStats from "../components/teacher/OverallStats";
-import WeeklyStats from "../components/teacher/WeeklyStats";
 import ClassStats from "../components/teacher/ClassStats";
 
 function TeacherDashboard() {
