@@ -51,7 +51,7 @@ const DailyPlanner = () => {
   };
 
   return (
-    <div className="p-5 h-90 bg-white rounded-xl shadow flex flex-col">
+    <div className="p-2 h-95 bg-white rounded-xl shadow flex flex-col">
       <h2 className="font-semibold mb-3">Daily Planner</h2>
 
       {/* Input */}

@@ -14,20 +14,16 @@ const TaskSection = () => {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
 
-  // LOAD TASKS
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem(storageKey)) || [];
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTasks(saved);
   }, [storageKey]);
 
-  // SAVE TASKS
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(tasks));
     window.dispatchEvent(new Event("storage"));
   }, [tasks, storageKey]);
 
-  // ADD TASK
   const addTask = () => {
     if (!task.trim()) return;
 
@@ -42,12 +38,10 @@ const TaskSection = () => {
     setTask("");
   };
 
-  // DELETE
   const deleteTask = (id) => {
     setTasks(tasks.filter((t) => t.id !== id));
   };
 
-  // TOGGLE COMPLETE
   const toggleTask = (id) => {
     setTasks(
       tasks.map((t) =>
@@ -56,7 +50,6 @@ const TaskSection = () => {
     );
   };
 
-  // EDIT
   const updateTask = (id) => {
     const newText = prompt("Edit task:");
     if (!newText) return;
@@ -68,22 +61,23 @@ const TaskSection = () => {
     );
   };
 
-  // FILTERS
   const pendingTasks = tasks.filter((t) => !t.completed);
   const completedTasks = tasks.filter((t) => t.completed);
 
   return (
     <MainLayout>
-      <div className="flex-1 p-6 overflow-y-auto">
+      <div className="flex-1 p-3 sm:p-4 md:p-6 ">
 
-        {/* TOP GRID: Tasks + Habits + Planner */}
-        <div className="grid lg:grid-cols-3 gap-6 mb-6">
+        {/* TOP GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4 mb-6">
 
           {/* TASKS */}
-          <div className="bg-white p-5 rounded-xl shadow h-90">
-            <h2 className="text-lg font-semibold mb-4">Tasks</h2>
+          <div className="bg-white p-2 sm:p-5 rounded-xl shadow w-full">
+            <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+              Tasks
+            </h2>
 
-            <div className="flex gap-2 mb-4">
+            <div className="flex flex-col sm:flex-row gap-2 mb-4">
               <input
                 value={task}
                 onChange={(e) => setTask(e.target.value)}
@@ -92,30 +86,30 @@ const TaskSection = () => {
               />
               <button
                 onClick={addTask}
-                className="bg-blue-600 text-white px-4 rounded-lg text-sm"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm w-full sm:w-auto"
               >
                 Add
               </button>
             </div>
 
-            {/* PENDING */}
-            <h3 className="text-sm font-medium mb-2 text-gray-600">
+            <h3 className="text-xs sm:text-sm font-medium mb-2 text-gray-600">
               Pending
             </h3>
-            <div className="space-y-2 max-h-50 overflow-y-auto mb-4">
+
+            <div className="space-y-2 max-h-10 sm:max-h-20 overflow-y-auto mb-4">
               {pendingTasks.map((t) => (
                 <div
                   key={t.id}
-                  className="flex justify-between items-center bg-gray-100 p-2 rounded-lg text-sm"
+                  className="flex justify-between items-center bg-gray-100 p-2 rounded-lg text-xs sm:text-sm"
                 >
                   <span
                     onClick={() => toggleTask(t.id)}
-                    className="cursor-pointer"
+                    className="cursor-pointer break-words"
                   >
                     {t.title}
                   </span>
 
-                  <div className="space-x-2">
+                  <div className="flex gap-2">
                     <button
                       onClick={() => updateTask(t.id)}
                       className="text-yellow-500 text-xs"
@@ -133,11 +127,11 @@ const TaskSection = () => {
               ))}
             </div>
 
-            {/* COMPLETED */}
-            <h3 className="text-sm font-medium mb-2 text-green-600">
+            <h3 className="text-xs sm:text-sm font-medium mb-2 text-green-600">
               Completed
             </h3>
-            <div className="space-y-2 max-h-30 overflow-y-auto">
+
+            <div className="space-y-2 max-h-10 sm:max-h-15 overflow-y-auto">
               {completedTasks.length === 0 ? (
                 <p className="text-xs text-gray-400">
                   No completed tasks
@@ -146,11 +140,11 @@ const TaskSection = () => {
                 completedTasks.map((t) => (
                   <div
                     key={t.id}
-                    className="flex justify-between items-center bg-green-50 p-2 rounded-lg text-sm"
+                    className="flex justify-between items-center bg-green-50 p-2 rounded-lg text-xs sm:text-sm"
                   >
                     <span
                       onClick={() => toggleTask(t.id)}
-                      className="line-through text-gray-400 cursor-pointer"
+                      className="line-through text-gray-400 cursor-pointer break-words"
                     >
                       {t.title}
                     </span>
@@ -166,7 +160,6 @@ const TaskSection = () => {
               )}
             </div>
 
-            {/* CLEAR COMPLETED */}
             {completedTasks.length > 0 && (
               <button
                 onClick={() =>
@@ -180,38 +173,40 @@ const TaskSection = () => {
           </div>
 
           {/* HABITS */}
-          <div className=" rounded-xl">
+          <div className="w-full">
             <HabitTracker />
           </div>
 
-          {/* DAILY PLANNER */}
-          <div className="" >
+          {/* PLANNER */}
+          <div className="w-full">
             <DailyPlanner />
           </div>
         </div>
 
-        {/* POMODORO TIMER */}
+        {/* POMODORO */}
         <div className="mb-6">
           <PomodoroTimer />
         </div>
 
-        {/* ANALYTICS DASHBOARD */}
-        <div className="bg-white p-5 rounded-xl shadow mb-6">
+        {/* DASHBOARD */}
+        <div className="bg-white p-4 sm:p-5 rounded-xl shadow mb-6">
           <Dashboard tasks={tasks} />
         </div>
 
-        {/* NOTES & CALCULATOR */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          <div className=" bg-white rounded-xl shadow">
+        {/* NOTES + CALCULATOR */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+          <div className="bg-white rounded-xl shadow">
             <NotesSection />
           </div>
 
           <div className="bg-white p-4 rounded-xl shadow">
-            <h2 className="text-lg font-semibold mb-3">Quick Calculator</h2>
+            <h2 className="text-base sm:text-lg font-semibold mb-3">
+              Quick Calculator
+            </h2>
             <NotesCalculator />
           </div>
         </div>
-        
+
       </div>
     </MainLayout>
   );

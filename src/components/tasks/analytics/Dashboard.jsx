@@ -31,7 +31,7 @@ const Dashboard = ({ tasks = defaultTasks }) => {
             <p className="text-3xl font-bold">{completedTasks}</p>
           </div>
 
-          <div className="bg-yellow-50 p-4 rounded-lg text-center shadow-sm">
+          <div className="bg-yellow-50 p-4  rounded-lg text-center shadow-sm">
             <p className="text-gray-500 text-sm">Pending</p>
             <p className="text-3xl font-bold">{pendingTasks}</p>
           </div>
@@ -40,9 +40,9 @@ const Dashboard = ({ tasks = defaultTasks }) => {
 
       {/* Optional: Task list */}
       {totalTasks > 0 && (
-        <div className="mt-6">
+        <div className="mt-6 ">
           <h3 className="text-xl font-semibold mb-3">Task List</h3>
-          <ul className="space-y-2">
+          <ul className="space-y-2 overflow-y-auto h-40">
             {tasks.map((task) => (
               <li
                 key={task.id}

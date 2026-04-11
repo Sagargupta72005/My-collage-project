@@ -82,7 +82,7 @@ const HabitTracker = () => {
   };
 
   return (
-    <div className="p-5 bg-white overflow-hidden rounded-xl shadow flex flex-col h-90 ">
+    <div className="p-5 bg-white overflow-hidden rounded-xl shadow flex flex-col h-95 ">
       <h2 className="text-lg font-semibold mb-4">Habits</h2>
 
       {/* Input */}
