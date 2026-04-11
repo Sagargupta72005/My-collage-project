@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -11,9 +11,32 @@ import ProfessionalDashboard from "./pages/ProfessionalDashboard";
 import Profile from "./pages/Profile";
 import TaskSection from "./components/tasks/TaskSection";
 
-function App() {
-  const role = localStorage.getItem("role");
+// ✅ Role-based dashboard handler
+const RoleBasedDashboard = ({ theme, toggleTheme }) => {
+  const { role } = useParams();
+  const storedRole = localStorage.getItem("role");
 
+  // 🔒 Not logged in
+  if (!storedRole) return <Navigate to="/login" />;
+
+  // 🔒 URL mismatch fix
+  if (role !== storedRole) {
+    return <Navigate to={`/${storedRole}/dashboard`} />;
+  }
+
+  switch (role) {
+    case "student":
+      return <StudentDashboard theme={theme} toggleTheme={toggleTheme} />;
+    case "teacher":
+      return <TeacherDashboard theme={theme} toggleTheme={toggleTheme} />;
+    case "professional":
+      return <ProfessionalDashboard theme={theme} toggleTheme={toggleTheme} />;
+    default:
+      return <Navigate to="/login" />;
+  }
+};
+
+function App() {
   // 🔥 GLOBAL THEME STATE
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") || "light"
@@ -37,47 +60,35 @@ function App() {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
+  // 🔒 Protected Route
   const ProtectedRoute = ({ children }) => {
-    if (!role) return <Navigate to="/" />;
-    return children;
+    const role = localStorage.getItem("role");
+    return role ? children : <Navigate to="/login" />;
   };
 
   return (
     <div className="selection:bg-yellow-100 bg-white dark:bg-slate-900 min-h-screen transition-colors">
       <Routes>
 
-        {/* Entry */}
-        {/* <Route path="/" element={<Signup />} /> */}
+        {/* ✅ Entry */}
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
-        {/* DASHBOARD */}
+        {/* ✅ DASHBOARD */}
         <Route
           path="/:role/dashboard"
           element={
             <ProtectedRoute>
-              {role === "student" && (
-                <StudentDashboard
-                  toggleTheme={toggleTheme}
-                  theme={theme}
-                />
-              )}
-              {role === "teacher" && (
-                <TeacherDashboard
-                  toggleTheme={toggleTheme}
-                  theme={theme}
-                />
-              )}
-              {role === "professional" && (
-                <ProfessionalDashboard
-                  toggleTheme={toggleTheme}
-                  theme={theme}
-                />
-              )}
+              <RoleBasedDashboard
+                theme={theme}
+                toggleTheme={toggleTheme}
+              />
             </ProtectedRoute>
           }
         />
 
-        {/* TASKS */}
+        {/* ✅ TASKS */}
         <Route
           path="/:role/tasks"
           element={
@@ -91,7 +102,7 @@ function App() {
           }
         />
 
-        {/* PROFILE */}
+        {/* ✅ PROFILE */}
         <Route
           path="/:role/profile"
           element={
@@ -104,13 +115,8 @@ function App() {
           }
         />
 
-        {/* Fallback */}
-        <Route
-          path="*"
-          element={
-            role ? <Navigate to={`/${role}/dashboard`} /> : <Navigate to="/" />
-          }
-        />
+        {/* ✅ Fallback */}
+        <Route path="*" element={<Navigate to="/login" />} />
 
       </Routes>
     </div>
