@@ -12,11 +12,11 @@ function StatsCards({ tasks }) {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-4  gap-4 mb-6">
       {stats.map((s, i) => (
-        <div key={i} className="bg-white px-7 py-8 rounded-lg shadow">
-          <h3 className="text-gray-500 text-md">{s.label}</h3>
-          <p className="text-2xl font-bold">{s.value}</p>
+        <div key={i} className="bg-(--secondary-gradient) px-7 py-8 rounded-lg shadow">
+          <h3 className="text-white text-md">{s.label}</h3>
+          <p className="text-2xl text-white font-bold">{s.value}</p>
         </div>
       ))}
     </div>

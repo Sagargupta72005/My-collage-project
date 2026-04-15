@@ -13,13 +13,13 @@ const Dashboard = ({ tasks = defaultTasks }) => {
   const pendingTasks = totalTasks - completedTasks;
 
   return (
-    <div className="p-4 sm:p-5 md:p-6 h-full">
-      <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6">
+    <div className="p-4 sm:p-5 md:p-6 h-full ">
+      <h2 className="text-lg sm:text-xl md:text-2xl text-white  font-bold mb-4 sm:mb-6">
         Analytics Dashboard
       </h2>
 
       {totalTasks === 0 ? (
-        <p className="text-gray-500 text-sm">No tasks yet.</p>
+        <p className="text-gray-200 text-sm">No tasks yet.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           
@@ -44,7 +44,7 @@ const Dashboard = ({ tasks = defaultTasks }) => {
       {/* TASK LIST */}
       {totalTasks > 0 && (
         <div className="mt-5 sm:mt-6">
-          <h3 className="text-base sm:text-lg md:text-xl font-semibold mb-3">
+          <h3 className="text-base text-white sm:text-lg md:text-xl font-semibold mb-3">
             Task List
           </h3>
 
@@ -53,7 +53,7 @@ const Dashboard = ({ tasks = defaultTasks }) => {
             {tasks.map((task) => (
               <li
                 key={task.id}
-                className={`p-2 rounded text-xs sm:text-sm break-words ${
+                className={`p-2 rounded text-xs sm:text-sm wrap-break-word ${
                   task.completed ? "bg-green-100" : "bg-red-100"
                 }`}
               >

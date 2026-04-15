@@ -38,9 +38,7 @@ const RoleBasedDashboard = ({ theme, toggleTheme }) => {
 
 function App() {
   // 🔥 GLOBAL THEME STATE
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme") || "light"
-  );
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   // 🔥 APPLY THEME
   useEffect(() => {
@@ -69,7 +67,6 @@ function App() {
   return (
     <div className="selection:bg-yellow-100 bg-white dark:bg-slate-900 min-h-screen transition-colors">
       <Routes>
-
         {/* ✅ Entry */}
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
@@ -80,10 +77,7 @@ function App() {
           path="/:role/dashboard"
           element={
             <ProtectedRoute>
-              <RoleBasedDashboard
-                theme={theme}
-                toggleTheme={toggleTheme}
-              />
+              <RoleBasedDashboard theme={theme} toggleTheme={toggleTheme} />
             </ProtectedRoute>
           }
         />
@@ -107,17 +101,13 @@ function App() {
           path="/:role/profile"
           element={
             <ProtectedRoute>
-              <Profile
-                toggleTheme={toggleTheme}
-                theme={theme}
-              />
+              <Profile toggleTheme={toggleTheme} theme={theme} />
             </ProtectedRoute>
           }
         />
 
         {/* ✅ Fallback */}
         <Route path="*" element={<Navigate to="/login" />} />
-
       </Routes>
     </div>
   );

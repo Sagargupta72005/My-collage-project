@@ -22,7 +22,7 @@ function Sidebar({ open, setOpen }) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-white border-r z-50
+        className={`fixed top-0 left-0 h-full w-64 bg-(--hero-gradient) border-r z-50
         transform transition-transform duration-300
         ${open ? "translate-x-0 " : "-translate-x-full"}
         md:translate-x-0 md:static md:flex md:flex-col`}
@@ -34,10 +34,10 @@ function Sidebar({ open, setOpen }) {
 
         {/* Logo */}
         <div className="px-5 py-4 border-b">
-          <h2 className="text-2xl font-bold text-blue-600">
+          <h2 className="text-2xl font-bold text-orange-300">
             Limitless
           </h2>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-orange-200 mt-1">
             {role.toUpperCase()} PANEL
           </p>
         </div>
@@ -56,8 +56,8 @@ function Sidebar({ open, setOpen }) {
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition
                     ${
                       isActive
-                        ? "bg-blue-500 text-white"
-                        : "text-gray-600 hover:bg-blue-50 hover:text-blue-600"
+                        ? "bg-orange-300 text-white"
+                        : "text-gray-200 bg-gray-300/20 hover:text-orange-200"
                     }`}
                   >
                     <span

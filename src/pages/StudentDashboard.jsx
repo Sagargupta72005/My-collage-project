@@ -18,6 +18,7 @@ function StudentDashboard() {
       try {
         const saved = JSON.parse(localStorage.getItem(storageKey)) || [];
         setTasks(saved);
+      // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setTasks([]);
       }
@@ -50,6 +51,7 @@ function StudentDashboard() {
       }
     });
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNotifications(notes);
   }, [tasks]);
 
@@ -88,10 +90,10 @@ function StudentDashboard() {
     <MainLayout>
       {/* HEADER */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">
+        <h1 className="text-2xl font-bold text-gray-200">
           Student Dashboard
         </h1>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-300">
           Track your tasks, deadlines, and progress
         </p>
       </div>

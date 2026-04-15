@@ -18,8 +18,8 @@ function DashboardTabs({ tasks }) {
             onClick={() => setActiveTab(tab)}
             className={`px-8 py-2 rounded-lg text-sm font-medium ${
               activeTab === tab
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
+                ? "bg-orange-300 text-white"
+                : "bg-gray-200/20 text-gray-200"
             }`}
           >
             {tab.toUpperCase()}
@@ -35,7 +35,7 @@ function DashboardTabs({ tasks }) {
       {activeTab === "homework" && <HomeworkTracker tasks={tasks} />}
 
       {activeTab === "notes" && (
-        <div className="bg-white p-4 rounded-xl shadow">
+        <div className="bg-gray-600/50 text-white p-4 rounded-xl shadow">
           <p>Add Subject Notes component here</p>
         </div>
       )}

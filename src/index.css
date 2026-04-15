@@ -11,3 +11,36 @@
   font-weight: 500;
   font-style: normal;
 }
+ 
+:root {
+  --primary-gradient: linear-gradient(135deg, #00162d, #001a4880);
+   --secondary-gradient: rgba(107, 114, 128, 0.5);
+   --third-gradient: rgb(255, 166, 0);
+/* Optimized Gradients */
+  --success-gradient: linear-gradient(135deg, #0d8a2a, #7bed9f);
+  --danger-gradient:  linear-gradient(135deg, #dc3545, #ff6b6b);
+  --warning-gradient: linear-gradient(135deg, #ffc107, #ffdd59);
+  --info-gradient:    linear-gradient(135deg, #17a2b8, #63cdda); /* Fixed angle to 135deg */
+  --dark-gradient:    linear-gradient(135deg, #343a40, #000000);
+  --light-gradient:   linear-gradient(135deg, #f8f9fa, #e9ecef);
+  /* Hero Gradient: Cleaned up the mid-tones for a smoother blend */
+  --hero-gradient: linear-gradient(135deg, #393369, #62697d, #436f8f, #00d4ff);
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}

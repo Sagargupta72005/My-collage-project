@@ -51,7 +51,7 @@ function TeacherDashboard() {
   return (
     <MainLayout>
 
-      <h1 className="text-2xl font-bold mb-6 ">
+      <h1 className="text-2xl text-white font-bold mb-6 ">
         Teacher Dashboard
       </h1>
 

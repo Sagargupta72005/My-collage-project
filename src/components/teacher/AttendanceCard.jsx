@@ -88,7 +88,7 @@ function AttendanceCard({ tasks = [], setTasks, storageKey }) {
     Number(attendanceInput) > totalStudents;
 
   return (
-    <div className="bg-white p-4 rounded space-y-4">
+    <div className="bg-(--secondary-gradient) text-white p-4 rounded space-y-4">
 
       {/* 📊 Average */}
       <div>

@@ -17,11 +17,11 @@ function WeeklyStats({ tasks }) {
   });
 
   return (
-    <div className="bg-white p-4 w-full rounded shadow">
+    <div className="bg-(--secondary-gradient) text-white p-4 mt-6 w-full rounded shadow">
       <h2 className="font-semibold mb-3">Classes Per Week</h2>
 
       {Object.keys(weeklyStats).length === 0 ? (
-        <p className="text-gray-500 text-sm">No weekly data available</p>
+        <p className="text-white text-sm">No weekly data available</p>
       ) : (
         Object.keys(weeklyStats).map((week, i) => (
           <div key={i} className="mb-2 flex justify-between">

@@ -4,7 +4,7 @@ import WeeklyStats from "./WeeklyStats";
 
 function ClassStats({ tasks, setTasks, storageKey }) {
   return (
-    <div className="space-y-8 mt-6">
+    <div className="space-y-8 mt-6 ">
 
      <div className="flex justify-between items-center gap-5">
 

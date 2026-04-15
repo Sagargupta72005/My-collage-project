@@ -18,11 +18,11 @@ function SubjectStats({ tasks = [] }) {
   });
 
   return (
-    <div className="bg-white p-4 w-full mt-6 rounded shadow">
-      <h2 className="font-semibold mb-3">Subject Progress</h2>
+    <div className="bg-(--secondary-gradient) p-4 w-full mt-6 rounded shadow">
+      <h2 className="font-semibold text-white mb-3">Subject Progress</h2>
 
       {Object.keys(subjectStats).length === 0 ? (
-        <p className="text-gray-500 text-sm">No subject data available</p>
+        <p className="text-white text-sm">No subject data available</p>
       ) : (
         Object.keys(subjectStats).map((sub, i) => {
           const data = subjectStats[sub];
@@ -40,7 +40,7 @@ function SubjectStats({ tasks = [] }) {
                 </p>
               </div>
 
-              <div className="w-full bg-gray-200 h-2  rounded mt-1">
+              <div className="w-full bg-gray-200 h-5 rounded mt-1">
                 <div
                   className="bg-green-500 h-2 rounded"
                   style={{ width: `${percent}%` }}

@@ -81,11 +81,11 @@ const PomodoroTimer = () => {
   };
 
   return (
-    <div className="w-full p-4 sm:p-5 md:p-6 bg-white rounded-xl shadow-lg flex flex-col lg:flex-row gap-5 md:gap-6">
+    <div className="w-full p-4 sm:p-5 md:p-6 bg-(--secondary-gradient) text-white rounded-xl shadow-lg flex flex-col lg:flex-row gap-5 md:gap-6">
 
       {/* LEFT: TIMER */}
       <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center">
-        <div className="text-3xl sm:text-4xl md:text-5xl font-[font1] text-gray-800">
+        <div className="text-3xl sm:text-4xl md:text-5xl font-[font1] text-gray-200">
           {formatTime()}
         </div>
 
@@ -119,7 +119,7 @@ const PomodoroTimer = () => {
         </div>
 
         {/* PROGRESS BAR */}
-        <div className="w-full h-2 sm:h-3 bg-gray-200 rounded-full overflow-hidden mt-3">
+        <div className="w-full h-2 sm:h-3 bg-(--secondary-gradient) rounded-full overflow-hidden mt-3">
           <div
             className={`h-full transition-all ${
               mode === "Work"
@@ -150,8 +150,8 @@ const PomodoroTimer = () => {
         />
 
         {/* CUSTOM TIMES */}
-        <div className="flex flex-col gap-3 border p-4 rounded-lg bg-gray-50">
-          <span className="text-gray-600 text-sm font-[font1]">
+        <div className="flex flex-col gap-3 border p-4 rounded-lg bg-(--secondary-gradient">
+          <span className="text-gray-200 text-sm font-[font1]">
             Custom Times (minutes)
           </span>
 
