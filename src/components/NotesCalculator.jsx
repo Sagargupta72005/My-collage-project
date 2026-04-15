@@ -54,32 +54,32 @@ const NotesCalculator = ({ onSaveResult }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-(--secondary-gradient) border border-(--third-gradient) rounded-xl shadow-lg overflow-hidden transition-all">
+    <div className="max-w-md mx-auto bg-(--secondary-gradient) border  rounded-xl shadow-lg overflow-hidden transition-all">
       
       {/* Header */}
       <div className="px-4 py-2 border-b bg-(--secondary-gradient) flex justify-between items-center">
         <span className="text-xs font-semibold text-gray-200 uppercase">Smart Calc</span>
-        <button onClick={clear} className="text-blue-400 text-xs hover:underline">Clear</button>
+        <button onClick={clear} className="text-red-950 text-xs hover:underline">Clear</button>
       </div>
 
       {/* Body */}
       <div className="p-5 space-y-4">
         
         {/* Name */}
-        <div className="flex flex-col">
+        <div className="flex flex-col text-white">
           <label className="text-gray-200 text-xs mb-1">Name (Optional)</label>
           <input
             type="text"
             value={calcName}
             onChange={(e) => setCalcName(e.target.value)}
             placeholder="e.g. Groceries"
-            className="w-full p-2 border border-(--third-gradient) rounded text-sm focus:ring-1 focus:ring-blue-300"
+            className="w-full p-2 border rounded text-sm focus:ring-1 focus:ring-blue-300"
           />
         </div>
 
         {/* Expression */}
-        <div className="flex flex-col relative">
-          <label className="text-gray-200 text-xs mb-1">Expression</label>
+        <div className="flex flex-col relative text-white">
+          <label className=" text-xs mb-1">Expression</label>
           <input
             ref={inputRef}
             type="text"
@@ -91,7 +91,7 @@ const NotesCalculator = ({ onSaveResult }) => {
             }}
             onKeyDown={handleKeyDown}
             placeholder="e.g. 50 x 2 + 10"
-            className="w-full p-3 border border-(--third-gradient) rounded focus:ring-1 focus:ring-blue-300 pr-16"
+            className="w-full p-3 border  rounded focus:ring-1 focus:ring-blue-300 pr-16"
           />
           <button
             onClick={calculateAndSave}

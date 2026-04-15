@@ -98,7 +98,7 @@ const DailyPlanner = () => {
         {plans.map((p) => (
           <div
             key={p.id}
-            className="flex justify-between items-center p-2 bg-gray-50 border rounded text-sm"
+            className="flex justify-between items-center p-2 bg-gray-200/20 border rounded text-sm"
           >
             <span>{p.start} - {p.end} : {p.title}</span>
             <button

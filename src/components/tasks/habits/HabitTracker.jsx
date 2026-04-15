@@ -110,7 +110,7 @@ const HabitTracker = () => {
         {habits.map((h) => (
           <div
             key={h.id}
-            className="border  rounded-lg p-3 bg-gray-50 flex flex-col gap-2"
+            className="border  rounded-lg p-3 bg-gray-200/10 flex flex-col gap-2"
           >
             {/* Habit title and streak */}
             <div className="flex justify-between items-center">
@@ -132,7 +132,7 @@ const HabitTracker = () => {
             </div>
 
             {/* Weekly calendar */}
-            <div className="grid grid-cols-7 gap-1 text-center">
+            <div className="grid grid-cols-7  gap-1 text-center">
               {last7Days().map((day) => {
                 const dayString = day.toDateString();
                 const completed = h.completedDates.includes(dayString);
@@ -140,7 +140,7 @@ const HabitTracker = () => {
                   <div
                     key={dayString}
                     className={`p-2 rounded-lg text-xs cursor-pointer ${
-                      completed ? "bg-green-500 text-white" : "bg-gray-200 text-gray-700"
+                      completed ? "bg-green-900 text-white" : "bg-gray-500 text-gray-200"
                     }`}
                     title={day.toDateString()}
                     onClick={() => markDone(h.id, day)}

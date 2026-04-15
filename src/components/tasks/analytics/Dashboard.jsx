@@ -54,7 +54,7 @@ const Dashboard = ({ tasks = defaultTasks }) => {
               <li
                 key={task.id}
                 className={`p-2 rounded text-xs sm:text-sm wrap-break-word ${
-                  task.completed ? "bg-green-100" : "bg-red-100"
+                  task.completed ? "bg-green-700 text-black" : "bg-red-500 text-white"
                 }`}
               >
                 {task.title}{" "}

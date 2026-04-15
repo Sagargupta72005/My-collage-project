@@ -9,6 +9,7 @@ function NotesSection() {
   const [currentNote, setCurrentNote] = useState("");
   const [activeId, setActiveId] = useState(null);
   const [aiOutput, setAiOutput] = useState("");
+  const [viewNote, setViewNote] = useState(null);
 
   // Load notes
   useEffect(() => {
@@ -26,6 +27,11 @@ function NotesSection() {
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(notes));
   }, [notes, storageKey]);
+
+  // Lock scroll when modal open
+  useEffect(() => {
+    document.body.style.overflow = viewNote ? "hidden" : "auto";
+  }, [viewNote]);
 
   const resetEditor = () => {
     setTitle("");
@@ -73,33 +79,26 @@ function NotesSection() {
     }
   };
 
-  // 🤖 Fake AI
   const handleSummarize = () => {
     if (!currentNote.trim()) return;
-
-    const summary =
-      currentNote.split(".").slice(0, 2).join(".").trim() + "...";
-
+    const summary = currentNote.split(".").slice(0, 2).join(".").trim() + "...";
     setAiOutput("Summary: " + summary);
   };
 
   const handleImprove = () => {
     if (!currentNote.trim()) return;
-
     const improved = currentNote
       .replace(/\bi\b/g, "I")
       .replace(/\bim\b/g, "I'm")
       .replace(/\bdont\b/g, "don't");
-
     setAiOutput("Improved: " + improved);
   };
 
   return (
-    <div className="p-5 rounded-xl  shadow h-full">
-      <h2 className="text-lg font-semibold text-slate-700 mb-4">
-        Notes
-      </h2>
+    <div className="p-5 rounded-xl text-white shadow h-full">
+      <h2 className="text-lg font-semibold text-slate-100 mb-4">Notes</h2>
 
+      {/* Editor */}
       <div className="mb-6">
         <input
           value={title}
@@ -112,22 +111,14 @@ function NotesSection() {
           value={currentNote}
           onChange={(e) => setCurrentNote(e.target.value)}
           placeholder="Write a new note..."
-          className="w-full h-32 p-3 border border-slate-300 rounded-lg resize-none 
-                     focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full h-32 p-3 border border-slate-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <div className="flex gap-2 mt-2">
-          <button
-            onClick={handleSummarize}
-            className="px-2 py-1 text-xs bg-purple-500 text-white rounded"
-          >
+          <button onClick={handleSummarize} className="px-2 py-1 text-xs bg-purple-500 text-white rounded">
             Summarize
           </button>
-
-          <button
-            onClick={handleImprove}
-            className="px-2 py-1 text-xs bg-green-500 text-white rounded"
-          >
+          <button onClick={handleImprove} className="px-2 py-1 text-xs bg-green-500 text-white rounded">
             Improve
           </button>
         </div>
@@ -139,10 +130,7 @@ function NotesSection() {
         )}
 
         <div className="flex justify-between mt-2">
-          <span className="text-xs text-slate-400">
-            {currentNote.length} characters
-          </span>
-
+          <span className="text-xs text-slate-400">{currentNote.length} characters</span>
           <button
             onClick={handleSaveNote}
             className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs"
@@ -152,44 +140,44 @@ function NotesSection() {
         </div>
       </div>
 
+      {/* Notes List */}
       <div>
-        <h3 className="text-sm font-semibold  text-slate-500 mb-2">
-          Saved Notes
-        </h3>
+        <h3 className="text-sm font-semibold text-slate-500 mb-2">Saved Notes</h3>
 
         {notes.length === 0 && (
-          <p className="text-xs text-slate-400 italic">
-            No notes saved yet.
-          </p>
+          <p className="text-xs text-slate-400 italic">No notes saved yet.</p>
         )}
 
-        <div className="grid gap-3 h-30 overflow-y-scroll">
+        <div className="grid gap-3 h-40 overflow-y-scroll">
           {notes.map((note) => (
             <div
               key={note.id}
-              className="p-3 border rounded-lg  bg-white hover:shadow-sm transition"
+              onClick={() => setViewNote(note)}
+              className="p-3 border rounded-lg bg-white hover:shadow-sm transition cursor-pointer"
             >
-              <h4 className="font-semibold text-slate-800 text-sm">
-                {note.title}
-              </h4>
+              <h4 className="font-semibold text-slate-800 text-sm">{note.title}</h4>
 
-              <p className="text-xs text-slate-600 line-clamp-2 mt-1">
-                {note.text}
-              </p>
+              <p className="text-xs text-slate-600 line-clamp-2 mt-1">{note.text}</p>
 
               <div className="flex justify-between items-center mt-2 text-xs text-slate-400">
                 <span>{note.createdAt}</span>
 
                 <div className="flex gap-2">
                   <button
-                    onClick={() => handleEditNote(note)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleEditNote(note);
+                    }}
                     className="hover:text-blue-600"
                   >
                     Edit
                   </button>
 
                   <button
-                    onClick={() => handleDeleteNote(note.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteNote(note.id);
+                    }}
                     className="hover:text-red-500"
                   >
                     Delete
@@ -200,6 +188,33 @@ function NotesSection() {
           ))}
         </div>
       </div>
+
+      {/* View Modal */}
+      {viewNote && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white w-[90%] max-w-lg p-5 rounded-xl shadow-lg relative">
+
+            <button
+              onClick={() => setViewNote(null)}
+              className="absolute top-2 right-3 text-gray-500 hover:text-black"
+            >
+              ✕
+            </button>
+
+            <h2 className="text-lg font-semibold text-slate-800 mb-2">
+              {viewNote.title}
+            </h2>
+
+            <p className="text-xs text-slate-400 mb-3">
+              {viewNote.createdAt}
+            </p>
+
+            <div className="text-sm text-slate-700 whitespace-pre-wrap max-h-[300px] overflow-y-auto">
+              {viewNote.text}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

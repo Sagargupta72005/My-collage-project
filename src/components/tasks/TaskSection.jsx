@@ -104,7 +104,7 @@ const TaskSection = () => {
                 >
                   <span
                     onClick={() => toggleTask(t.id)}
-                    className="cursor-pointer break-words"
+                    className="cursor-pointer wrap-break-word"
                   >
                     {t.title}
                   </span>
@@ -200,7 +200,7 @@ const TaskSection = () => {
           </div>
 
           <div className="bg-(--secondary-gradient) p-4 rounded-xl shadow">
-            <h2 className="text-base sm:text-lg font-semibold mb-3">
+            <h2 className="text-base text-white sm:text-lg font-semibold mb-3">
               Quick Calculator
             </h2>
             <NotesCalculator />
