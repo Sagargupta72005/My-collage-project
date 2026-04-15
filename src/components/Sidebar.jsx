@@ -15,21 +15,30 @@ function Sidebar({ open, setOpen }) {
       {/* Overlay */}
       {open && (
         <div
-          className="fixed inset-0 h-screen bg-black/40 z-40 md:hidden"
+          className="selection:none fixed  inset-0 bg-black/50 z-40 md:hidden "
           onClick={() => setOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-(--hero-gradient) border-r z-50
+        className={`fixed top-0 left-0 h-full w-64 z-50 border-r
         transform transition-transform duration-300
-        ${open ? "translate-x-0 " : "-translate-x-full"}
+        ${open ? "translate-x-0" : "-translate-x-full"}
         md:translate-x-0 md:static md:flex md:flex-col`}
+        style={{
+          background:
+            "var(--fourth-gradient)", // 🔥 dark clean gradient
+        }}
       >
-        {/* Close button (mobile) */}
+        {/* Close button */}
         <div className="md:hidden flex justify-end p-4">
-          <button onClick={() => setOpen(false)}>✕</button>
+          <button
+            onClick={() => setOpen(false)}
+            className="text-white text-lg"
+          >
+            ✕
+          </button>
         </div>
 
         {/* Logo */}
@@ -56,13 +65,13 @@ function Sidebar({ open, setOpen }) {
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition
                     ${
                       isActive
-                        ? "bg-orange-300 text-white"
-                        : "text-gray-200 bg-gray-300/20 hover:text-orange-200"
+                        ? "bg-orange-400 text-white shadow"
+                        : "text-gray-300 hover:bg-white/10 hover:text-orange-300"
                     }`}
                   >
                     <span
                       className={`w-2 h-2 rounded-full ${
-                        isActive ? "bg-white" : "bg-gray-300"
+                        isActive ? "bg-white" : "bg-gray-500"
                       }`}
                     />
 
@@ -77,7 +86,7 @@ function Sidebar({ open, setOpen }) {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t text-xs text-gray-400">
+        <div className="p-4 border-t border-white/10 text-xs text-gray-400">
           © {new Date().getFullYear()} Smart Dashboard
         </div>
       </aside>

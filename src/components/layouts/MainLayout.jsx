@@ -7,8 +7,8 @@ function MainLayout({ children }) {
 
   return (
     <div
-      className="flex h-screen text-gray-600 w-full scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-900 dark:scrollbar-track-gray-700 dark:scrollbar-thumb-gray-600 transition-colors"
-      style={{ background: "var(--primary-gradient)" }}
+      className="flex  h-screen text-gray-600 w-full scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-900 dark:scrollbar-track-gray-700 dark:scrollbar-thumb-gray-600 transition-colors"
+      style={{ background: "var(--fourth-gradient)" }}
     >
 
       {/* Sidebar */}
