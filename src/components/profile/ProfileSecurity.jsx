@@ -13,16 +13,16 @@ function ProfileSecurity() {
 
       {/* 🔥 Header */}
       <div>
-        <h1 className="text-xl font-semibold text-gray-800">
+        <h1 className="text-2xl  font-semibold text-gray-100">
           Security Settings
         </h1>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-200">
           Manage your account security and sessions
         </p>
       </div>
 
       {/* 🔐 Card */}
-      <div className="bg-white rounded-xl shadow-md border p-5 space-y-5">
+      <div className="bg-white/90 rounded-xl shadow-md border p-5 space-y-5">
 
         {/* Password Section (placeholder) */}
         <div>

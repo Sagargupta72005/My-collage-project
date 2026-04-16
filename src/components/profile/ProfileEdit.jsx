@@ -18,15 +18,15 @@ function ProfileEdit() {
     <div className="max-w-4xl mx-auto px-2 sm:px-4 space-y-6">
 
       {/* 🔥 Title */}
-      <h1 className="text-xl sm:text-2xl font-semibold text-gray-800">
+      <h1 className="text-xl sm:text-2xl font-semibold text-gray-100">
         Public Profile
       </h1>
 
       {/* 🔥 Card */}
-      <div className="bg-white rounded-xl shadow-md border overflow-hidden">
+      <div className="bg-white/40 rounded-xl shadow-md border overflow-hidden">
 
         {/* 🔥 Avatar Section */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white">
+        <div style={{ background: "var(--info-gradient)" }} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 text-white">
           
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-2xl sm:text-3xl font-bold">
@@ -37,13 +37,13 @@ function ProfileEdit() {
               <p className="font-semibold text-sm sm:text-base">
                 {name || "Your Name"}
               </p>
-              <p className="text-xs sm:text-sm text-white/80">
+              <p className="text-xs sm:text-sm text-white">
                 Profile picture
               </p>
             </div>
           </div>
 
-          <button className="bg-white/20 hover:bg-white/30 px-3 py-1.5 text-xs sm:text-sm rounded-md transition">
+          <button style={{background: "var(--success-gradient)" }} className=" hover:bg-white/30 px-3 py-1.5 text-xs sm:text-sm rounded-md transition">
             Change
           </button>
         </div>
@@ -53,7 +53,7 @@ function ProfileEdit() {
 
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
+            <label className="block text-sm font-medium text-gray-100 mb-1">
               Name
             </label>
             <input
@@ -65,7 +65,7 @@ function ProfileEdit() {
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
+            <label className="block text-sm font-medium text-gray-100 mb-1">
               Email
             </label>
             <input
@@ -77,7 +77,7 @@ function ProfileEdit() {
 
           {/* Bio */}
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
+            <label className="block text-sm font-medium text-gray-100 mb-1">
               Bio
             </label>
             <textarea
@@ -92,7 +92,8 @@ function ProfileEdit() {
 
             <button
               onClick={handleSave}
-              className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-5 py-2 rounded-md text-sm hover:opacity-90 transition w-full sm:w-auto"
+              style={{ background: "var(--success-gradient)" }}
+              className=" text-white px-5 py-2 rounded-md text-sm hover:opacity-90 transition w-full sm:w-auto"
             >
               Update Profile
             </button>

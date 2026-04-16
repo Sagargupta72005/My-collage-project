@@ -117,7 +117,7 @@ function ProfessionalDashboard() {
         <input
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
-          className="border border-(--third-gradient) p-2 flex-1 rounded-xl"
+          className="border  p-2 flex-1 rounded-xl"
           placeholder="Task title..."
         />
 
@@ -125,7 +125,7 @@ function ProfessionalDashboard() {
           type="date"
           value={newDate}
           onChange={(e) => setNewDate(e.target.value)}
-          className="border border-(--third-gradient) p-2 rounded-xl w-full sm:w-auto"
+          className="border  p-2 rounded-xl w-full sm:w-auto"
         />
 
         <button
@@ -150,7 +150,7 @@ function ProfessionalDashboard() {
       )}
 
       {/* Task List */}
-      <div className="p-3 sm:p-4 bg-(--secondary-gradient) text-white shadow rounded mb-6 max-h-[400px] overflow-y-auto">
+      <div className="p-3 sm:p-4 bg-(--secondary-gradient) text-white shadow rounded mb-6 max-h-100 overflow-y-auto">
         <h2 className="font-bold mb-3">All Tasks</h2>
 
         {tasks.map((t) => {

@@ -63,7 +63,7 @@ function ProfileDashboard() {
         {/* 🔥 Content */}
         <main className="flex-1 p-4 md:p-6 overflow-y-auto">
           <div className="max-w-5xl mx-auto">
-            <div className="bg-(--secondary-gradient) rounded-xl shadow-sm border p-5 md:p-6">
+            <div style={{ background: "var(--secondary-gradient)" }} className="rounded-xl shadow-sm border p-5 md:p-6">
               {renderContent()}
             </div>
           </div>
