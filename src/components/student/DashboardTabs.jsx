@@ -9,7 +9,7 @@ function DashboardTabs({ tasks }) {
   const tabs = ["classes", "revision", "homework", "notes"];
 
   return (
-    <div className="mt-6 space-y-6">
+    <div className="mt-6 space-y-6 overflow-auto ">
       {/* TAB BUTTONS */}
       <div className="flex gap-3">
         {tabs.map((tab) => (

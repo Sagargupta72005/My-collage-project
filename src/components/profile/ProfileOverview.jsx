@@ -9,6 +9,7 @@ function ProfileOverview() {
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("tasks")) || [];
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTasks(saved);
   }, []);
 
@@ -44,7 +45,7 @@ function ProfileOverview() {
     <div className="space-y-8">
 
       {/* Profile Header */}
-      <div style={{ background: "var(--info-gradient)" }} className=" p-6 text-white rounded-xl shadow flex items-center gap-4">
+      <div style={{ background: "var(--third-gradient)" }} className=" p-6 text-white rounded-xl shadow flex items-center gap-4">
         <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-xl font-bold">
           {initial}
         </div>
@@ -61,26 +62,26 @@ function ProfileOverview() {
       {/* Stats Grid */}
       <div  className="grid md:grid-cols-4 gap-4">
 
-        <div style={{ background: "var(--info-gradient)" }} className=" p-4 rounded-xl shadow">
+        <div style={{ background: "var(--third-gradient)" }} className=" p-4 rounded-xl shadow">
           <p className="text-gray-200 text-md">Total Tasks</p>
           <h2 className="text-gray-800 text-xl font-bold">{totalTasks}</h2>
         </div>
 
-        <div style={{ background: "var(--info-gradient)" }} className=" p-4 rounded-xl shadow">
+        <div style={{ background: "var(--third-gradient)" }} className=" p-4 rounded-xl shadow">
           <p className="text-gray-200 text-md">Completed</p>
           <h2 className="text-green-600 text-xl font-bold">
             {completedTasks}
           </h2>
         </div>
 
-        <div style={{ background: "var(--info-gradient)" }} className=" p-4 rounded-xl shadow">
+        <div style={{ background: "var(--third-gradient)" }} className=" p-4 rounded-xl shadow">
           <p className="text-gray-200 text-md">Pending</p>
           <h2 className="text-yellow-500 text-xl font-bold">
             {pendingTasks}
           </h2>
         </div>
 
-        <div style={{ background: "var(--info-gradient)" }} className=" p-4 rounded-xl shadow">
+        <div style={{ background: "var(--third-gradient)" }} className=" p-4 rounded-xl shadow">
           <p className="text-gray-200 text-md">Overdue</p>
           <h2 className="text-red-500 text-xl font-bold">
             {overdueTasks}
@@ -90,7 +91,7 @@ function ProfileOverview() {
       </div>
 
       {/* Progress Section */}
-      <div style={{ background: "var(--info-gradient)" }} className=" p-5 rounded-xl shadow">
+      <div style={{ background: "var(--third-gradient)" }} className=" p-5 rounded-xl shadow">
         <h3 className="font-semibold mb-3 text-gray-700">Progress</h3>
 
         <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
@@ -106,7 +107,7 @@ function ProfileOverview() {
       </div>
 
       {/* Motivation Card */}
-      <div style={{ background: "var(--info-gradient)" }} className=" p-5 rounded-xl shadow">
+      <div style={{ background: "var(--third-gradient)" }} className=" p-5 rounded-xl shadow">        
         <h3 className="font-semibold text-lg mb-1">
           Daily Motivation
         </h3>

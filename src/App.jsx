@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useParams } from "react-router-dom";
-
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-
 import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import ProfessionalDashboard from "./pages/ProfessionalDashboard";
-
 import Profile from "./pages/Profile";
 import TaskSection from "./components/tasks/TaskSection";
 
@@ -15,15 +12,12 @@ import TaskSection from "./components/tasks/TaskSection";
 const RoleBasedDashboard = ({ theme, toggleTheme }) => {
   const { role } = useParams();
   const storedRole = localStorage.getItem("role");
-
   // 🔒 Not logged in
   if (!storedRole) return <Navigate to="/login" />;
-
   // 🔒 URL mismatch fix
   if (role !== storedRole) {
     return <Navigate to={`/${storedRole}/dashboard`} />;
   }
-
   switch (role) {
     case "student":
       return <StudentDashboard theme={theme} toggleTheme={toggleTheme} />;
@@ -57,13 +51,11 @@ function App() {
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
-
   // 🔒 Protected Route
   const ProtectedRoute = ({ children }) => {
     const role = localStorage.getItem("role");
     return role ? children : <Navigate to="/login" />;
   };
-
   return (
     <div className="selection:bg-yellow-100 bg-white dark:bg-slate-900 min-h-screen transition-colors">
       <Routes>
@@ -71,7 +63,6 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-
         {/* ✅ DASHBOARD */}
         <Route
           path="/:role/dashboard"
@@ -81,7 +72,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         {/* ✅ TASKS */}
         <Route
           path="/:role/tasks"
@@ -105,7 +95,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         {/* ✅ Fallback */}
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>

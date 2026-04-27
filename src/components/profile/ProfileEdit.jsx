@@ -23,10 +23,10 @@ function ProfileEdit() {
       </h1>
 
       {/* 🔥 Card */}
-      <div className="bg-white/40 rounded-xl shadow-md border overflow-hidden">
+      <div className="bg-white/10 rounded-xl shadow-md border overflow-hidden">
 
         {/* 🔥 Avatar Section */}
-        <div style={{ background: "var(--info-gradient)" }} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 text-white">
+        <div style={{ background: "var(--third-gradient)" }} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-5 text-white">
           
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-2xl sm:text-3xl font-bold">

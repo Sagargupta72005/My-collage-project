@@ -9,9 +9,9 @@ function ProfileDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
 
   const tabs = [
-    { key: "overview", label: "Overview", icon: "🏠" },
-    { key: "edit", label: "Edit Profile", icon: "✏️" },
-    { key: "security", label: "Security", icon: "🔐" },
+    { key: "overview", label: "Overview" },
+    { key: "edit", label: "Edit Profile" },
+    { key: "security", label: "Security" },
   ];
 
   const renderContent = () => {
@@ -42,7 +42,7 @@ function ProfileDashboard() {
         </div>
 
         {/* 🔥 Tabs */}
-        <div className="flex gap-2 md:gap-3 px-4 md:px-6 py-3 bg-(--primary-gradient) border-b overflow-x-auto">
+        <div className="flex gap-2 md:gap-3 px-4 md:px-6 py-3 bg-(--primary-gradient) border-b overflow-x-hidden">
           {tabs.map((tab) => (
             <button
               key={tab.key}
@@ -50,8 +50,8 @@ function ProfileDashboard() {
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition
                 ${
                   activeTab === tab.key
-                    ? "bg-blue-500 text-white shadow"
-                    : "text-gray-600 hover:bg-gray-100"
+                    ? "bg-orange-400 text-white shadow"
+                    : "text-gray-600 hover:bg-gray-300"
                 }`}
             >
               <span>{tab.icon}</span>
@@ -61,14 +61,13 @@ function ProfileDashboard() {
         </div>
 
         {/* 🔥 Content */}
-        <main className="flex-1 p-4 md:p-6 overflow-y-auto">
+        <main className="flex-1 p-4 md:p-6 overflow-y-hidden">
           <div className="max-w-5xl mx-auto">
-            <div style={{ background: "var(--secondary-gradient)" }} className="rounded-xl shadow-sm border p-5 md:p-6">
+            <div style={{ background:"var(--secondary-gradient)" }} className="rounded-xl shadow-sm  border p-5 md:p-6">
               {renderContent()}
             </div>
           </div>
         </main>
-
       </div>
     </MainLayout>
   );

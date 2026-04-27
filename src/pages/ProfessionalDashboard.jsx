@@ -56,6 +56,7 @@ function ProfessionalDashboard() {
       }
     });
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNotifications(notes);
   }, [tasks]);
 
@@ -179,7 +180,7 @@ function ProfessionalDashboard() {
                     className="border px-2"
                   />
                 ) : (
-                  <span className="break-words">{t.title}</span>
+                  <span className="wrap-break-word">{t.title}</span>
                 )}
 
                 {t.dueDate && (

@@ -52,7 +52,7 @@ function ProfileSecurity() {
 
           <button
             onClick={handleLogout}
-            className="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-md text-sm hover:opacity-90 transition"
+            className="bg-linear-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-md text-sm hover:opacity-90 transition"
           >
             Logout
           </button>
