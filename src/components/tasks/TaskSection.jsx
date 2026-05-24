@@ -14,59 +14,87 @@ const TaskSection = () => {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
 
+  // LOAD TASKS
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem(storageKey)) || [];
     setTasks(saved);
   }, [storageKey]);
 
+  // SAVE TASKS + broadcast storage event so other tabs/components sync
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(tasks));
     window.dispatchEvent(new Event("storage"));
   }, [tasks, storageKey]);
 
+  // ADD TASK
   const addTask = () => {
     if (!task.trim()) return;
 
     const newTask = {
       id: Date.now(),
       title: task,
-      dueDate: new Date(),
+      dueDate: new Date().toISOString(),
       completed: false,
+      createdAt: new Date().toISOString(),
     };
 
-    setTasks([...tasks, newTask]);
+    setTasks((prev) => [...prev, newTask]);
     setTask("");
   };
 
+  // DELETE TASK
   const deleteTask = (id) => {
-    setTasks(tasks.filter((t) => t.id !== id));
+    setTasks((prev) => prev.filter((t) => t.id !== id));
   };
 
+  // TOGGLE COMPLETE
   const toggleTask = (id) => {
-    setTasks(
-      tasks.map((t) =>
-        t.id === id ? { ...t, completed: !t.completed } : t
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === id
+          ? {
+              ...t,
+              completed: !t.completed,
+              completedAt: !t.completed ? new Date().toISOString() : null,
+            }
+          : t
       )
     );
   };
 
+  // EDIT TASK (inline prompt — safe to keep as-is or swap with modal later)
   const updateTask = (id) => {
     const newText = prompt("Edit task:");
-    if (!newText) return;
+    if (!newText?.trim()) return;
 
-    setTasks(
-      tasks.map((t) =>
-        t.id === id ? { ...t, title: newText } : t
-      )
+    setTasks((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, title: newText.trim() } : t))
     );
   };
 
+  // CLEAR COMPLETED
+  const clearCompleted = () => {
+    setTasks((prev) => prev.filter((t) => !t.completed));
+  };
+
+  // DERIVED
   const pendingTasks = tasks.filter((t) => !t.completed);
   const completedTasks = tasks.filter((t) => t.completed);
 
+  // SHARED TASK STATS — passed to Dashboard, HabitTracker, DailyPlanner
+  const taskStats = {
+    total: tasks.length,
+    completed: completedTasks.length,
+    pending: pendingTasks.length,
+    completionRate:
+      tasks.length > 0
+        ? Math.round((completedTasks.length / tasks.length) * 100)
+        : 0,
+  };
+
   return (
     <MainLayout>
-      <div className="flex-1 p-3 sm:p-4 md:p-6 ">
+      <div className="flex-1 p-3 sm:p-4 md:p-6">
 
         {/* TOP GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4 mb-6">
@@ -81,6 +109,7 @@ const TaskSection = () => {
               <input
                 value={task}
                 onChange={(e) => setTask(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && addTask()}
                 className="border p-2 w-full rounded-lg text-sm"
                 placeholder="Enter task..."
               />
@@ -92,50 +121,55 @@ const TaskSection = () => {
               </button>
             </div>
 
+            {/* PENDING */}
             <h3 className="text-xs sm:text-sm font-medium mb-2 text-gray-200">
-              Pending
+              Pending ({pendingTasks.length})
             </h3>
 
             <div className="space-y-2 max-h-10 sm:max-h-20 overflow-y-auto mb-4">
-              {pendingTasks.map((t) => (
-                <div
-                  key={t.id}
-                  className="flex justify-between items-center bg-(--secondary-gradient) p-2 rounded-lg text-xs sm:text-sm"
-                >
-                  <span
-                    onClick={() => toggleTask(t.id)}
-                    className="cursor-pointer wrap-break-word"
+              {pendingTasks.length === 0 ? (
+                <p className="text-xs text-gray-400">No pending tasks 🎉</p>
+              ) : (
+                pendingTasks.map((t) => (
+                  <div
+                    key={t.id}
+                    className="flex justify-between items-center bg-(--secondary-gradient) p-2 rounded-lg text-xs sm:text-sm"
                   >
-                    {t.title}
-                  </span>
+                    <span
+                      onClick={() => toggleTask(t.id)}
+                      className="cursor-pointer break-words flex-1 mr-2"
+                      title="Click to complete"
+                    >
+                      {t.title}
+                    </span>
 
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => updateTask(t.id)}
-                      className="text-yellow-500 text-xs"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => deleteTask(t.id)}
-                      className="text-red-400 text-xs"
-                    >
-                      Delete
-                    </button>
+                    <div className="flex gap-2 shrink-0">
+                      <button
+                        onClick={() => updateTask(t.id)}
+                        className="text-yellow-500 text-xs"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => deleteTask(t.id)}
+                        className="text-red-400 text-xs"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
 
-            <h3 className="text-xs sm:text-sm font-medium mb-2 text-green-600">
-              Completed
+            {/* COMPLETED */}
+            <h3 className="text-xs sm:text-sm font-medium mb-2 text-green-400">
+              Completed ({completedTasks.length})
             </h3>
 
             <div className="space-y-2 max-h-10 sm:max-h-15 overflow-y-auto">
               {completedTasks.length === 0 ? (
-                <p className="text-xs text-gray-400">
-                  No completed tasks
-                </p>
+                <p className="text-xs text-gray-400">No completed tasks</p>
               ) : (
                 completedTasks.map((t) => (
                   <div
@@ -144,14 +178,15 @@ const TaskSection = () => {
                   >
                     <span
                       onClick={() => toggleTask(t.id)}
-                      className="line-through text-gray-400 cursor-pointer break-words"
+                      className="line-through text-gray-400 cursor-pointer break-words flex-1 mr-2"
+                      title="Click to undo"
                     >
                       {t.title}
                     </span>
 
                     <button
                       onClick={() => deleteTask(t.id)}
-                      className="text-red-400 text-xs"
+                      className="text-red-400 text-xs shrink-0"
                     >
                       Delete
                     </button>
@@ -162,9 +197,7 @@ const TaskSection = () => {
 
             {completedTasks.length > 0 && (
               <button
-                onClick={() =>
-                  setTasks(tasks.filter((t) => !t.completed))
-                }
+                onClick={clearCompleted}
                 className="text-xs text-red-500 mt-3"
               >
                 Clear Completed
@@ -172,31 +205,41 @@ const TaskSection = () => {
             )}
           </div>
 
-          {/* HABITS */}
+          {/* HABITS — receives task stats so it can show task completion context */}
           <div className="w-full">
-            <HabitTracker />
+            <HabitTracker tasks={tasks} taskStats={taskStats} />
           </div>
 
-          {/* PLANNER */}
+          {/* PLANNER — receives full tasks list so it can show what's due today */}
           <div className="w-full">
-            <DailyPlanner />
+            <DailyPlanner
+              tasks={tasks}
+              taskStats={taskStats}
+              onToggleTask={toggleTask}
+              onDeleteTask={deleteTask}
+            />
           </div>
         </div>
 
-        {/* POMODORO */}
+        {/* POMODORO — receives pending count so timer knows workload */}
         <div className="mb-6">
-          <PomodoroTimer />
+          <PomodoroTimer pendingCount={pendingTasks.length} taskStats={taskStats} />
         </div>
 
-        {/* DASHBOARD */}
-        <div className="bg-(--secondary-gradient)  p-4 sm:p-5 rounded-xl shadow mb-6">
-          <Dashboard tasks={tasks} />
+        {/* DASHBOARD — receives full tasks + stats for charts/analytics */}
+        <div className="bg-(--secondary-gradient) p-4 sm:p-5 rounded-xl shadow mb-6">
+          <Dashboard
+            tasks={tasks}
+            taskStats={taskStats}
+            onToggleTask={toggleTask}
+            onDeleteTask={deleteTask}
+          />
         </div>
 
-        {/* NOTES + CALCULATOR */}
+        {/* NOTES + CALCULATOR — receives completed tasks count for context */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
           <div className="bg-(--secondary-gradient) rounded-xl shadow">
-            <NotesSection />
+            <NotesSection taskStats={taskStats} />
           </div>
 
           <div className="bg-(--secondary-gradient) p-4 rounded-xl shadow">

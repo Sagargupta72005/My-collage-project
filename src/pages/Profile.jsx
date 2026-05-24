@@ -5,7 +5,7 @@ import ProfileSecurity from "../components/profile/ProfileSecurity";
 import ProfilePreferences from "../components/profile/ProfilePreferences";
 import MainLayout from "../components/layouts/MainLayout";
 
-function ProfileDashboard() {
+function Profile() {
   const [activeTab, setActiveTab] = useState("overview");
 
   const tabs = [
@@ -18,8 +18,8 @@ function ProfileDashboard() {
     switch (activeTab) {
       case "overview":
         return <ProfileOverview />;
-      case "edit":
-        return <ProfileEdit />;
+      // case "edit":
+        // return <ProfileEdit />;
       case "security":
         return <ProfileSecurity />;
       default:
@@ -73,4 +73,4 @@ function ProfileDashboard() {
   );
 }
 
-export default ProfileDashboard;
+export default Profile;
