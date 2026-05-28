@@ -31,16 +31,11 @@ function Navbar({ onMenuClick, search, setSearch }) {
           onClick={onMenuClick}
           className="
             md:hidden
-
             w-11 h-11 rounded-2xl
-
             bg-white/10
             hover:bg-white/20
-
             border border-white/10
-
-            text-white text-xl
-
+            text-black text-xl
             transition-all duration-300
           "
         >
@@ -107,15 +102,15 @@ function Navbar({ onMenuClick, search, setSearch }) {
           flex items-center gap-3
           px-3 py-2
           rounded-2xl
-          bg-white/10
+          bg-(--primary-color)/10
           backdrop-blur-xl
           border border-white/10
         "
       >
         <div className="hidden sm:block text-right">
-          <p className="text-sm text-white font-medium">Hey , {name}</p>
+          <p className="text-sm text-black font-medium">Hey , {name}</p>
 
-          {/* <p className="text-xs text-white/50 capitalize">{role}</p> */}
+          {/* <p className="text-xs text-black/50 capitalize">{role}</p> */}
         </div>
 
         {/* AVATAR */}
@@ -124,7 +119,7 @@ function Navbar({ onMenuClick, search, setSearch }) {
             w-11 h-11 rounded-2xl
             bg-gradient-to-br
             from-orange-400
-            to-pink-500
+            to-yellow-500
             flex items-center justify-center
             text-white font-bold
             shadow-lg "

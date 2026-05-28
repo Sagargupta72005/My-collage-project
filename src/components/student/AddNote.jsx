@@ -13,7 +13,7 @@ function AddNote({ addNote }) {
   };
 
   return (
-    <div className="mb-4 space-y-2">
+    <div className="mb-4 space-y-2 border border-white/10">
       <input
         type="text"
         placeholder="Subject"

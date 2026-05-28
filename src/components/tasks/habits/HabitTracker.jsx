@@ -82,7 +82,7 @@ const HabitTracker = () => {
   };
 
   return (
-    <div className="p-5 bg-(--secondary-gradient) text-white overflow-hidden rounded-xl shadow flex flex-col h-95 ">
+    <div className="p-5  text-(--text) overflow-hidden rounded-xl shadow flex flex-col h-95 ">
       <h2 className="text-lg font-semibold mb-4">Habits</h2>
 
       {/* Input */}
@@ -95,7 +95,7 @@ const HabitTracker = () => {
         />
         <button
           onClick={addHabit}
-          className="bg-green-500 text-white px-4 py-2 rounded-lg text-sm"
+          className="bg-green-500 text-(--text) px-4 py-2 rounded-lg text-sm"
         >
           Add
         </button>
@@ -140,7 +140,7 @@ const HabitTracker = () => {
                   <div
                     key={dayString}
                     className={`p-2 rounded-lg text-xs cursor-pointer ${
-                      completed ? "bg-green-900 text-white" : "bg-gray-500 text-gray-200"
+                      completed ? "bg-green-900 text-(--text)" : "bg-gray-500 text-gray-200"
                     }`}
                     title={day.toDateString()}
                     onClick={() => markDone(h.id, day)}

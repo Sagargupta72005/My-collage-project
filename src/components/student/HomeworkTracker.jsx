@@ -1,22 +1,20 @@
-import React from "react";
-
-function HomeworkTracker({ tasks }) {
-  const homework = tasks.filter((t) => t.type === "homework");
+function HomeworkTracker({ tasks = [] }) {
+  const homeworkTasks = tasks.filter((task) => task.type === "homework");
 
   return (
-    <div className="bg-gray-600/50 p-4 rounded-xl shadow">
-      <h2 className="font-semibold text-white text-lg">📝 Homework</h2>
-
-      {homework.length === 0 ? (
-        <p className="text-sm text-white mt-2">No homework</p>
+    <div className="space-y-3">
+      {homeworkTasks.length > 0 ? (
+        homeworkTasks.map((task) => (
+          <div
+            key={task.id}
+            className="p-4 rounded-xl bg-white/5 border border-white/10"
+          >
+            <h3 className="font-semibold">{task.title}</h3>
+            <p className="text-sm text-gray-300">{task.description}</p>
+          </div>
+        ))
       ) : (
-        <div className="mt-2 space-y-1">
-          {homework.map((h, i) => (
-            <p key={i}>
-              {h.title} {h.done ? "✅" : "⏳"}
-            </p>
-          ))}
-        </div>
+        <p className="text-gray-400">No homework tasks available.</p>
       )}
     </div>
   );

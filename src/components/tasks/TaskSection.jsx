@@ -20,7 +20,7 @@ const TaskSection = () => {
     setTasks(saved);
   }, [storageKey]);
 
-  // SAVE TASKS + broadcast storage event so other tabs/components sync
+  // SAVE TASKS
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(tasks));
     window.dispatchEvent(new Event("storage"));
@@ -62,13 +62,15 @@ const TaskSection = () => {
     );
   };
 
-  // EDIT TASK (inline prompt — safe to keep as-is or swap with modal later)
+  // EDIT TASK
   const updateTask = (id) => {
     const newText = prompt("Edit task:");
     if (!newText?.trim()) return;
 
     setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, title: newText.trim() } : t))
+      prev.map((t) =>
+        t.id === id ? { ...t, title: newText.trim() } : t
+      )
     );
   };
 
@@ -81,7 +83,7 @@ const TaskSection = () => {
   const pendingTasks = tasks.filter((t) => !t.completed);
   const completedTasks = tasks.filter((t) => t.completed);
 
-  // SHARED TASK STATS — passed to Dashboard, HabitTracker, DailyPlanner
+  // TASK STATS
   const taskStats = {
     total: tasks.length,
     completed: completedTasks.length,
@@ -100,7 +102,20 @@ const TaskSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4 mb-6">
 
           {/* TASKS */}
-          <div className="bg-(--secondary-gradient) text-white p-2 sm:p-5 rounded-xl shadow w-full">
+          <div
+            className="
+              bg-(--primary-gradient)
+              text-(--text)
+              p-2 sm:p-5
+              rounded-xl
+              shadow-[0_10px_35px_rgba(0,0,0,0.25)]
+              hover:shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+              hover:-translate-y-1
+              transition-all
+              duration-300
+              w-full
+            "
+          >
             <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
               Tasks
             </h2>
@@ -113,9 +128,10 @@ const TaskSection = () => {
                 className="border p-2 w-full rounded-lg text-sm"
                 placeholder="Enter task..."
               />
+
               <button
                 onClick={addTask}
-                className="bg-(--third-gradient) text-white px-4 py-2 rounded-lg text-sm w-full sm:w-auto"
+                className="bg-(--third-gradient) text-(--text) px-4 py-2 rounded-lg text-sm w-full sm:w-auto"
               >
                 Add
               </button>
@@ -126,9 +142,11 @@ const TaskSection = () => {
               Pending ({pendingTasks.length})
             </h3>
 
-            <div className="space-y-2 max-h-10 sm:max-h-20 overflow-y-auto mb-4">
+            <div className="space-y-2 max-h-40 overflow-y-auto mb-4">
               {pendingTasks.length === 0 ? (
-                <p className="text-xs text-gray-400">No pending tasks 🎉</p>
+                <p className="text-xs text-gray-400">
+                  No pending tasks 🎉
+                </p>
               ) : (
                 pendingTasks.map((t) => (
                   <div
@@ -150,6 +168,7 @@ const TaskSection = () => {
                       >
                         Edit
                       </button>
+
                       <button
                         onClick={() => deleteTask(t.id)}
                         className="text-red-400 text-xs"
@@ -167,9 +186,11 @@ const TaskSection = () => {
               Completed ({completedTasks.length})
             </h3>
 
-            <div className="space-y-2 max-h-10 sm:max-h-15 overflow-y-auto">
+            <div className="space-y-2 max-h-32 overflow-y-auto">
               {completedTasks.length === 0 ? (
-                <p className="text-xs text-gray-400">No completed tasks</p>
+                <p className="text-xs text-gray-400">
+                  No completed tasks
+                </p>
               ) : (
                 completedTasks.map((t) => (
                   <div
@@ -205,13 +226,35 @@ const TaskSection = () => {
             )}
           </div>
 
-          {/* HABITS — receives task stats so it can show task completion context */}
-          <div className="w-full">
+          {/* HABITS */}
+          <div
+            className="
+              w-full
+              bg-(--primary-gradient)
+              rounded-xl
+              shadow-[0_10px_35px_rgba(0,0,0,0.25)]
+              hover:shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+              hover:-translate-y-1
+              transition-all
+              duration-300
+            "
+          >
             <HabitTracker tasks={tasks} taskStats={taskStats} />
           </div>
 
-          {/* PLANNER — receives full tasks list so it can show what's due today */}
-          <div className="w-full">
+          {/* PLANNER */}
+          <div
+            className="
+              w-full
+              bg-(--primary-gradient)
+              rounded-xl
+              shadow-[0_10px_35px_rgba(0,0,0,0.25)]
+              hover:shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+              hover:-translate-y-1
+              transition-all
+              duration-300
+            "
+          >
             <DailyPlanner
               tasks={tasks}
               taskStats={taskStats}
@@ -221,13 +264,39 @@ const TaskSection = () => {
           </div>
         </div>
 
-        {/* POMODORO — receives pending count so timer knows workload */}
-        <div className="mb-6">
-          <PomodoroTimer pendingCount={pendingTasks.length} taskStats={taskStats} />
+        {/* POMODORO */}
+        <div
+          className="
+            mb-6
+            bg-(--primary-gradient)
+            rounded-xl
+            shadow-[0_10px_35px_rgba(0,0,0,0.25)]
+            hover:shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+            hover:-translate-y-1
+            transition-all
+            duration-300
+          "
+        >
+          <PomodoroTimer
+            pendingCount={pendingTasks.length}
+            taskStats={taskStats}
+          />
         </div>
 
-        {/* DASHBOARD — receives full tasks + stats for charts/analytics */}
-        <div className="bg-(--secondary-gradient) p-4 sm:p-5 rounded-xl shadow mb-6">
+        {/* DASHBOARD */}
+        <div
+          className="
+            bg-(--primary-gradient)
+            p-4 sm:p-5
+            rounded-xl
+            shadow-[0_10px_35px_rgba(0,0,0,0.25)]
+            hover:shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+            hover:-translate-y-1
+            transition-all
+            duration-300
+            mb-6
+          "
+        >
           <Dashboard
             tasks={tasks}
             taskStats={taskStats}
@@ -236,16 +305,41 @@ const TaskSection = () => {
           />
         </div>
 
-        {/* NOTES + CALCULATOR — receives completed tasks count for context */}
+        {/* NOTES + CALCULATOR */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-          <div className="bg-(--secondary-gradient) rounded-xl shadow">
+
+          {/* NOTES */}
+          <div
+            className="
+              bg-(--primary-gradient)
+              rounded-xl
+              shadow-[0_10px_35px_rgba(0,0,0,0.25)]
+              hover:shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+              hover:-translate-y-1
+              transition-all
+              duration-300
+            "
+          >
             <NotesSection taskStats={taskStats} />
           </div>
 
-          <div className="bg-(--secondary-gradient) p-4 rounded-xl shadow">
-            <h2 className="text-base text-white sm:text-lg font-semibold mb-3">
+          {/* CALCULATOR */}
+          <div
+            className="
+              bg-(--primary-gradient)
+              p-4
+              rounded-xl
+              shadow-[0_10px_35px_rgba(0,0,0,0.25)]
+              hover:shadow-[0_15px_45px_rgba(0,0,0,0.35)]
+              hover:-translate-y-1
+              transition-all
+              duration-300
+            "
+          >
+            <h2 className="text-base text-(--text) sm:text-lg font-semibold mb-3">
               Quick Calculator
             </h2>
+
             <NotesCalculator />
           </div>
         </div>

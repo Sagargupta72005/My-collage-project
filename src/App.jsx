@@ -8,6 +8,7 @@ import TeacherDashboard from "./pages/TeacherDashboard";
 import ProfessionalDashboard from "./pages/ProfessionalDashboard";
 import Profile from "./pages/Profile";
 import TaskSection from "./components/tasks/TaskSection";
+import Analytics from "./pages/Analytics";
 
 // AUTH CONTEXT
 export const AuthContext = createContext(null);
@@ -254,6 +255,18 @@ function App() {
             }
           />
 
+          <Route
+            path="/:role/analytics"
+            element={
+              <ProtectedRoute>
+                <Analytics
+                  toggleTheme={toggleTheme}
+                  theme={theme}
+                />
+              </ProtectedRoute>
+            }
+          />
+          
           {/* FALLBACK */}
           <Route
             path="*"

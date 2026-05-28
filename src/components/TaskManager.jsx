@@ -104,7 +104,7 @@ function TaskManager({ initialTasks = [] }) {
             onClick={() => setFilter(f)}
             className={`px-3 py-1 rounded text-sm ${
               filter === f
-                ? "bg-blue-500 text-white"
+                ? "bg-blue-500 (--text)"
                 : "bg-gray-200 text-gray-700"
             }`}
           >

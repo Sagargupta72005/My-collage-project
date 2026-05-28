@@ -1,14 +1,23 @@
-import React from "react";
+function ClassTracker({ tasks = [] }) {
+  const classTasks = tasks.filter((task) => task.type === "class");
 
-function ClassTracker({ tasks }) {
-  const completed = tasks.filter((t) => t.done).length;
-
+  
+  
   return (
-    <div className="bg-gray-600/50 p-4 rounded-xl shadow">
-      <h2 className="font-semibold text-white text-lg">📘 Classes Completed</h2>
-      <p className="text-3xl mt-2 font-bold text-white">
-        {completed}
-      </p>
+    <div className="space-y-3">
+      {classTasks.length > 0 ? (
+        classTasks.map((task) => (
+          <div
+            key={task.id}
+            className="p-4 rounded-xl bg-white/5 border border-white/10"
+          >
+            <h3 className="font-semibold">{task.title}</h3>
+            <p className="text-sm text-gray-300">{task.description}</p>
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-400">No class tasks available.</p>
+      )}
     </div>
   );
 }

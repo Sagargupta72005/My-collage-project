@@ -51,7 +51,7 @@ const DailyPlanner = () => {
   };
 
   return (
-    <div className="p-2 h-95 bg-(--secondary-gradient) text-white rounded-xl shadow flex flex-col">
+    <div className="p-2 h-95 text-(--text) rounded-xl shadow flex flex-col">
       <h2 className="font-semibold mb-3">Daily Planner</h2>
 
       {/* Input */}
@@ -103,7 +103,7 @@ const DailyPlanner = () => {
             <span>{p.start} - {p.end} : {p.title}</span>
             <button
               onClick={() => deletePlan(p.id)}
-              className="bg-red-500 text-white px-2 py-1 rounded text-xs"
+              className="bg-red-500 text-(--text) px-2 py-1 rounded text-xs"
             >
               🗑️
             </button>

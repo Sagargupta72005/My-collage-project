@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
-
 function MainLayout({ children }) {
 
   const [open, setOpen] =
@@ -16,13 +14,8 @@ function MainLayout({ children }) {
   return (
     <div
       className="
-        relative flex h-screen w-full overflow-hidden
-        text-white
-      "
-      style={{
-        background:
-          "linear-gradient(135deg, #0f172a 0%, #111827 35%, #1e1b4b 100%)",
-      }}
+        relative flex h-screen w-full overflow-hidden font-xl
+        text-black bg(--primary-color)"
     >
 
       {/* BACKGROUND GLOW */}
@@ -30,7 +23,6 @@ function MainLayout({ children }) {
         className="
           absolute top-[-100px] left-[-100px]
           w-[320px] h-[320px]
-          bg-pink-500/20
           rounded-full blur-3xl
           pointer-events-none
         "
@@ -40,12 +32,10 @@ function MainLayout({ children }) {
         className="
           absolute bottom-[-120px] right-[-120px]
           w-[350px] h-[350px]
-          bg-orange-400/20
           rounded-full blur-3xl
           pointer-events-none
         "
       />
-
       {/* SIDEBAR */}
       <AnimatePresence>
         <Sidebar
@@ -77,7 +67,6 @@ function MainLayout({ children }) {
           relative z-10
         "
       >
-
         {/* NAVBAR */}
         <motion.div
           initial={{
@@ -94,7 +83,7 @@ function MainLayout({ children }) {
           }}
           className="
             backdrop-blur-xl
-            bg-white/5
+            bg-(--primary-gradient)
             border-b border-white/10
             shadow-lg
           "
@@ -130,26 +119,19 @@ function MainLayout({ children }) {
           }}
           className="
             flex-1 overflow-y-auto
-            p-4 md:p-6
-
             scrollbar-thin
             scrollbar-thumb-white/20
             scrollbar-track-transparent
           "
         >
-
           {/* GLASS CONTAINER */}
           <div
             className="
-              min-h-full rounded-3xl
-
-              bg-white/5
+              min-h-full 
+              bg-(--primary-gradient)
               backdrop-blur-2xl
-
               border border-white/10
-
               shadow-[0_8px_32px_rgba(0,0,0,0.35)]
-
               p-4 md:p-6
             "
           >

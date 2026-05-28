@@ -10,7 +10,7 @@ function Profile() {
 
   const tabs = [
     { key: "overview", label: "Overview" },
-    { key: "edit", label: "Edit Profile" },
+    // { key: "edit", label: "Edit Profile" },
     { key: "security", label: "Security" },
   ];
 
@@ -18,8 +18,8 @@ function Profile() {
     switch (activeTab) {
       case "overview":
         return <ProfileOverview />;
-      // case "edit":
-        // return <ProfileEdit />;
+      case "edit":
+        return <ProfileEdit />;
       case "security":
         return <ProfileSecurity />;
       default:
@@ -33,10 +33,10 @@ function Profile() {
 
         {/* 🔥 Header */}
         <div className="bg-(--primary-gradient) px-4 md:px-6 py-4 border-b">
-          <h1 className="text-lg md:text-xl font-semibold text-gray-200">
+          <h1 className="text-lg md:text-xl font-semibold text-black">
             Profile Settings
           </h1>
-          <p className="text-sm text-gray-200">
+          <p className="text-sm text-gray-600">
             Manage your account and preferences
           </p>
         </div>
@@ -61,9 +61,9 @@ function Profile() {
         </div>
 
         {/* 🔥 Content */}
-        <main className="flex-1 p-4 md:p-6 overflow-y-hidden">
-          <div className="max-w-5xl mx-auto">
-            <div style={{ background:"var(--secondary-gradient)" }} className="rounded-xl shadow-sm  border p-5 md:p-6">
+        <main className="flex-1 overflow-y-hidden">
+          <div className="max-w-7xl mx-auto">
+            <div style={{ background:"var(--primary-gradient)" }} className="rounded-xl shadow-2xl  p-10">
               {renderContent()}
             </div>
           </div>

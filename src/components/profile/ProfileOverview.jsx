@@ -1,61 +1,44 @@
 import { useEffect, useState } from "react";
 
 function ProfileOverview() {
-
-  // CORRECT LOCALSTORAGE KEYS
-  const name =
-    localStorage.getItem("userName") || "User";
-
-  const email =
-    localStorage.getItem("userEmail") || "Not set";
-
-  const role =
-    localStorage.getItem("role") || "Guest";
-
   const [tasks, setTasks] = useState([]);
 
+  // USER DATA
+  const name = localStorage.getItem("userName") || "User";
+  const email = localStorage.getItem("userEmail") || "Not set";
+  const role = localStorage.getItem("role") || "Guest";
+
   useEffect(() => {
+    const savedTasks =
+      JSON.parse(localStorage.getItem("tasks")) || [];
 
-    const saved =
-      JSON.parse(
-        localStorage.getItem("tasks")
-      ) || [];
-
-    setTasks(saved);
-
+    setTasks(savedTasks);
   }, []);
 
   // TASK STATS
   const totalTasks = tasks.length;
 
-  const completedTasks =
-    tasks.filter((t) => t.completed).length;
+  const completedTasks = tasks.filter(
+    (task) => task.completed
+  ).length;
 
   const pendingTasks =
     totalTasks - completedTasks;
 
-  // TODAY
   const today = new Date();
 
-  // OVERDUE
   const overdueTasks = tasks.filter(
-    (t) =>
-      !t.completed &&
-      new Date(t.dueDate).setHours(
+    (task) =>
+      !task.completed &&
+      task.dueDate &&
+      new Date(task.dueDate).setHours(
         0,
         0,
         0,
         0
-      ) <
-        new Date(today).setHours(
-          0,
-          0,
-          0,
-          0
-        )
+      ) < today.setHours(0, 0, 0, 0)
   ).length;
 
-  // COMPLETION RATE
   const completionRate =
     totalTasks === 0
       ? 0
@@ -63,183 +46,132 @@ function ProfileOverview() {
           (completedTasks / totalTasks) * 100
         );
 
-  // MOTIVATION
+  // MOTIVATION MESSAGE
   const motivation =
     completionRate === 100
-      ? "You're unstoppable 🚀"
-      : completionRate > 60
-      ? "You're doing great 💪"
-      : completionRate > 30
-      ? "Keep pushing ⚡"
-      : "Start small. Start now.";
+      ? "Excellent work!"
+      : completionRate >= 70
+      ? "You are doing great."
+      : completionRate >= 40
+      ? "Keep going."
+      : "Start completing your tasks today.";
 
-  // USER INITIAL
-  const initial = name
-    ? name.charAt(0).toUpperCase()
-    : "U";
+  // PROFILE INITIAL
+  const initial = name.charAt(0).toUpperCase();
 
   return (
-    <div className="space-y-8">
-
-      {/* PROFILE HEADER */}
-      <div
-        style={{
-          background:
-            "var(--secondary-gradient)",
-        }}
-        className="p-6 text-white rounded-xl shadow flex items-center gap-4"
-      >
-
-        <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-xl font-bold">
-          {initial}
-        </div>
-
+    <div className=" p-6">
+      <div className="max-w-5xl mx-auto space-y-6">
+        {/* PAGE TITLE */}
         <div>
-
-          <h1 className="text-xl font-semibold">
-            {name}
+          <h1 className="text-3xl font-bold text-gray-800">
+            Profile Overview
           </h1>
 
-          <p className="text-sm text-white/80">
-            {email}
+          <p className="text-gray-500 mt-1">
+            Manage your profile and task progress.
           </p>
-
-          <span className="text-xs bg-white/20 px-2 py-1 rounded mt-1 inline-block">
-            {role}
-          </span>
-
         </div>
 
+        {/* PROFILE CARD */}
+        <div className="bg-white rounded-2xl shadow p-6 flex items-center gap-5 border border-gray-200">
+          <div className="w-16 h-16 rounded-full bg-blue-500 text-white flex items-center justify-center text-2xl font-bold">
+            {initial}
+          </div>
+
+          <div>
+            <h2 className="text-xl font-semibold text-gray-800">
+              {name}
+            </h2>
+
+            <p className="text-gray-500 text-sm">
+              {email}
+            </p>
+
+            <span className="inline-block mt-2 px-3 py-1 text-xs rounded-full bg-gray-100 text-gray-700 border">
+              {role}
+            </span>
+          </div>
+        </div>
+
+        {/* STATS GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="bg-white rounded-2xl shadow p-5 border border-gray-200">
+            <p className="text-sm text-gray-500">
+              Total Tasks
+            </p>
+
+            <h2 className="text-3xl font-bold text-gray-800 mt-2">
+              {totalTasks}
+            </h2>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow p-5 border border-gray-200">
+            <p className="text-sm text-gray-500">
+              Completed
+            </p>
+
+            <h2 className="text-3xl font-bold text-green-600 mt-2">
+              {completedTasks}
+            </h2>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow p-5 border border-gray-200">
+            <p className="text-sm text-gray-500">
+              Pending
+            </p>
+
+            <h2 className="text-3xl font-bold text-yellow-500 mt-2">
+              {pendingTasks}
+            </h2>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow p-5 border border-gray-200">
+            <p className="text-sm text-gray-500">
+              Overdue
+            </p>
+
+            <h2 className="text-3xl font-bold text-red-500 mt-2">
+              {overdueTasks}
+            </h2>
+          </div>
+        </div>
+
+        {/* PROGRESS SECTION */}
+        <div className="bg-white rounded-2xl shadow p-6 border border-gray-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-lg font-semibold text-gray-800">
+              Task Progress
+            </h3>
+
+            <span className="text-sm font-medium text-gray-600">
+              {completionRate}%
+            </span>
+          </div>
+
+          <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+            <div
+              className="bg-blue-500 h-4 rounded-full transition-all duration-500"
+              style={{ width: `${completionRate}%` }}
+            />
+          </div>
+
+          <p className="text-sm text-gray-500 mt-3">
+            {completedTasks} out of {totalTasks} tasks completed.
+          </p>
+        </div>
+
+        {/* MOTIVATION SECTION */}
+        <div className="bg-white rounded-2xl shadow p-6 border border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">
+            Daily Motivation
+          </h3>
+
+          <p className="text-gray-600 leading-relaxed">
+            {motivation}
+          </p>
+        </div>
       </div>
-
-      {/* STATS GRID */}
-      <div className="grid md:grid-cols-4 gap-4">
-
-        <div
-          style={{
-            background:
-              "var(--secondary-gradient)",
-          }}
-          className="p-4 rounded-xl shadow"
-        >
-
-          <p className="text-gray-200 text-md">
-            Total Tasks
-          </p>
-
-          <h2 className="text-gray-800 text-xl font-bold">
-            {totalTasks}
-          </h2>
-
-        </div>
-
-        <div
-          style={{
-            background:
-              "var(--secondary-gradient)",
-          }}
-          className="p-4 rounded-xl shadow"
-        >
-
-          <p className="text-gray-200 text-md">
-            Completed
-          </p>
-
-          <h2 className="text-green-600 text-xl font-bold">
-            {completedTasks}
-          </h2>
-
-        </div>
-
-        <div
-          style={{
-            background:
-              "var(--secondary-gradient)",
-          }}
-          className="p-4 rounded-xl shadow"
-        >
-
-          <p className="text-gray-200 text-md">
-            Pending
-          </p>
-
-          <h2 className="text-yellow-500 text-xl font-bold">
-            {pendingTasks}
-          </h2>
-
-        </div>
-
-        <div
-          style={{
-            background:
-              "var(--secondary-gradient)",
-          }}
-          className="p-4 rounded-xl shadow"
-        >
-
-          <p className="text-gray-200 text-md">
-            Overdue
-          </p>
-
-          <h2 className="text-red-500 text-xl font-bold">
-            {overdueTasks}
-          </h2>
-
-        </div>
-
-      </div>
-
-      {/* PROGRESS */}
-      <div
-        style={{
-          background:
-            "var(--secondary-gradient)",
-        }}
-        className="p-5 rounded-xl shadow"
-      >
-
-        <h3 className="font-semibold mb-3 text-gray-700">
-          Progress
-        </h3>
-
-        <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-
-          <div
-            style={{
-              background:
-                "var(--info-gradient)",
-              width: `${completionRate}%`,
-            }}
-            className="h-3 rounded-full transition-all"
-          />
-
-        </div>
-
-        <p className="text-sm text-gray-200 mt-2">
-          {completionRate}% tasks completed
-        </p>
-
-      </div>
-
-      {/* MOTIVATION */}
-      <div
-        style={{
-          background:
-            "var(--secondary-gradient)",
-        }}
-        className="p-5 rounded-xl shadow"
-      >
-
-        <h3 className="font-semibold text-lg mb-1">
-          Daily Motivation
-        </h3>
-
-        <p className="text-sm text-white/90">
-          {motivation}
-        </p>
-
-      </div>
-
     </div>
   );
 }

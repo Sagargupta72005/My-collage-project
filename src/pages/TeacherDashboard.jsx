@@ -51,17 +51,17 @@ function TeacherDashboard() {
   return (
     <MainLayout>
 
-      <h1 className="text-2xl text-white font-bold mb-6 ">
+      <h1 className="text-2xl text-black font-bold mb-6 ">
         Teacher Dashboard
       </h1>
 
       <OverallStats tasks={tasks} />
 
-      <WeeklyChart tasks={tasks} />
       {/* ✅ 2. Detailed Class Insights (attendance + subject) */}
-      <ClassStats tasks={tasks} />
+      {/* <ClassStats tasks={tasks} /> */}
 
       {/* ✅ 4. Chart Visualization */}
+      <WeeklyChart tasks={tasks} />
 
       {/* ✅ 5. Notifications */}
       {notifications.length > 0 && (

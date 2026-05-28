@@ -81,11 +81,11 @@ const PomodoroTimer = () => {
   };
 
   return (
-    <div className="w-full p-4 sm:p-5 md:p-6 bg-(--secondary-gradient) text-white rounded-xl shadow-lg flex flex-col lg:flex-row gap-5 md:gap-6">
+    <div className="w-full p-4 sm:p-5 md:p-6 text-(--text) rounded-xl shadow-lg flex flex-col lg:flex-row gap-5 md:gap-6">
 
       {/* LEFT: TIMER */}
       <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center">
-        <div className="text-3xl sm:text-4xl md:text-5xl font-[font1] text-gray-200">
+        <div className="text-3xl sm:text-4xl md:text-5xl font-[font1] text-gray-900">
           {formatTime()}
         </div>
 
@@ -94,14 +94,14 @@ const PomodoroTimer = () => {
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-2">
           <button
             onClick={() => setIsRunning(true)}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-4 py-1 rounded text-xs sm:text-sm"
+            className="bg-blue-500 hover:bg-blue-600  text-(--text) px-3 sm:px-4 py-1 rounded text-xs sm:text-sm"
           >
             Start
           </button>
 
           <button
             onClick={() => setIsRunning(false)}
-            className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 sm:px-4 py-1 rounded text-xs sm:text-sm"
+            className="bg-yellow-400 hover:bg-yellow-500  text-(--text) px-3 sm:px-4 py-1 rounded text-xs sm:text-sm"
           >
             Pause
           </button>
@@ -112,14 +112,14 @@ const PomodoroTimer = () => {
               setMode("Work");
               setTime(workMinutes * 60);
             }}
-            className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-1 rounded text-xs sm:text-sm"
+            className="bg-red-500 hover:bg-red-600  text-(--text) px-3 sm:px-4 py-1 rounded text-xs sm:text-sm"
           >
             Reset
           </button>
         </div>
 
         {/* PROGRESS BAR */}
-        <div className="w-full h-2 sm:h-3 bg-(--secondary-gradient) rounded-full overflow-hidden mt-3">
+        <div className="w-full h-2 sm:h-3   rounded-full overflow-hidden mt-3">
           <div
             className={`h-full transition-all ${
               mode === "Work"
@@ -151,7 +151,7 @@ const PomodoroTimer = () => {
 
         {/* CUSTOM TIMES */}
         <div className="flex flex-col gap-3 border p-4 rounded-lg bg-(--secondary-gradient">
-          <span className="text-gray-200 text-sm font-[font1]">
+          <span className="text-gray-900 text-sm font-[font1]">
             Custom Times (minutes)
           </span>
 
@@ -184,7 +184,7 @@ const PomodoroTimer = () => {
 
           <button
             onClick={applyCustomTimes}
-            className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs sm:text-sm w-full sm:w-auto self-center"
+            className="bg-green-500 hover:bg-green-600  text-(--text) px-3 py-1 rounded text-xs sm:text-sm w-full sm:w-auto self-center"
           >
             Apply
           </button>

@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import MainLayout from "../components/layouts/MainLayout";
-import StatsCards from "../components/StatsCards";
 import WeeklyChart from "../components/WeeklyChart";
-import SubjectStats from "../components/teacher/SubjectStats";
+// import SubjectStats from "../components/teacher/SubjectStats";
 import DashboardTabs from "../components/student/DashboardTabs";
 
 function StudentDashboard() {
@@ -18,7 +17,7 @@ function StudentDashboard() {
       try {
         const saved = JSON.parse(localStorage.getItem(storageKey)) || [];
         setTasks(saved);
-      // eslint-disable-next-line no-unused-vars
+        // eslint-disable-next-line no-unused-vars
       } catch (err) {
         setTasks([]);
       }
@@ -90,17 +89,15 @@ function StudentDashboard() {
     <MainLayout>
       {/* HEADER */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-200">
-          Student Dashboard
-        </h1>
-        <p className="text-sm text-gray-300">
+        <h1 className="text-2xl font-bold  text-(--text)">Student Dashboard</h1>
+        <p className="text-sm text-(--text)">
           Track your tasks, deadlines, and progress
         </p>
       </div>
 
       {/* STATS */}
       <div className="mb-6">
-      <DashboardTabs tasks={tasks}/>
+        <DashboardTabs tasks={tasks} />
         {/* <StatsCards tasks={tasks} /> */}
       </div>
 
@@ -121,12 +118,7 @@ function StudentDashboard() {
           ))}
         </div>
       )}
-          <WeeklyChart tasks={tasks} />
-
-        <div className="flex items-center ">
-          <SubjectStats tasks={tasks} />
-        </div>
-
+      <WeeklyChart tasks={tasks} />
 
     </MainLayout>
   );

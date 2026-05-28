@@ -56,8 +56,7 @@ function WeeklyChart({ tasks = [] }) {
   }
 
   return (
-    <div className="p-5 rounded-2xl shadow-lg mt-6 text-white bg-(--secondary-gradient)">
-      
+    <div className="selection:select-none p-9 rounded-2xl shadow-2xl mt-6 text-(--text) ">
       <h2 className="mb-4 font-semibold text-lg">
         Weekly Progress
       </h2>
@@ -67,12 +66,12 @@ function WeeklyChart({ tasks = [] }) {
 
           <XAxis 
             dataKey="date" 
-            stroke="#d1d5db" 
+            stroke="black" 
           />
 
           <YAxis 
             allowDecimals={false} 
-            stroke="#d1d5db" 
+            stroke="black" 
           />
 
           <Tooltip
@@ -80,13 +79,13 @@ function WeeklyChart({ tasks = [] }) {
               background: "#1f2937",
               border: "none",
               borderRadius: "8px",
-              color: "#fff",
+              color: "#d1d5db",
             }}
           />
 
           <Bar
             dataKey="completed"
-            fill="orange"
+            fill="var(--third-gradient)"
             radius={[10, 10, 0, 0]}
           />
 

@@ -1,20 +1,21 @@
-import React from "react";
+function RevisionTracker({ tasks = [] }) {
+  const revisionTasks = tasks.filter((task) => task.type === "revision");
 
-function RevisionTracker({ tasks }) {
-  const revisions = tasks.filter((t) => t.type === "revision");
-
+  
   return (
-    <div className="bg-gray-600/50 p-4 rounded-xl shadow">
-      <h2 className="font-semibold text-white text-lg">🔁 Revisions</h2>
-
-      {revisions.length === 0 ? (
-        <p className="text-sm text-white mt-2">No revision tasks</p>
+    <div className="space-y-3">
+      {revisionTasks.length > 0 ? (
+        revisionTasks.map((task) => (
+          <div
+            key={task.id}
+            className="p-4 rounded-xl bg-white/5 border border-white/10"
+          >
+            <h3 className="font-semibold">{task.title}</h3>
+            <p className="text-sm text-gray-300">{task.description}</p>
+          </div>
+        ))
       ) : (
-        <div className="mt-2 space-y-1">
-          {revisions.map((r, i) => (
-            <p key={i}>{r.title}</p>
-          ))}
-        </div>
+        <p className="text-gray-400">No revision tasks available.</p>
       )}
     </div>
   );

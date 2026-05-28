@@ -95,8 +95,8 @@ function NotesSection() {
   };
 
   return (
-    <div className="p-5 rounded-xl text-white shadow h-full">
-      <h2 className="text-lg font-semibold text-slate-100 mb-4">Notes</h2>
+    <div className="p-5 rounded-xl text-(--text) shadow h-full">
+      <h2 className="text-lg font-semibold text-slate-900 mb-4">Notes</h2>
 
       {/* Editor */}
       <div className="mb-6">
@@ -115,16 +115,16 @@ function NotesSection() {
         />
 
         <div className="flex gap-2 mt-2">
-          <button onClick={handleSummarize} className="px-2 py-1 text-xs bg-purple-500 text-white rounded">
+          <button onClick={handleSummarize} className="px-2 py-1 text-xs bg-purple-500 text-(--text) rounded">
             Summarize
           </button>
-          <button onClick={handleImprove} className="px-2 py-1 text-xs bg-green-500 text-white rounded">
+          <button onClick={handleImprove} className="px-2 py-1 text-xs bg-green-500 text-(--text) rounded">
             Improve
           </button>
         </div>
 
         {aiOutput && (
-          <div className="mt-3 p-2 bg-white border rounded text-sm text-slate-600">
+          <div className="mt-3 p-2 bg-white border rounded text-md text-slate-900">
             {aiOutput}
           </div>
         )}
@@ -133,7 +133,7 @@ function NotesSection() {
           <span className="text-xs text-slate-400">{currentNote.length} characters</span>
           <button
             onClick={handleSaveNote}
-            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs"
+            className="px-3 py-1 bg-blue-600 text-(--text) rounded hover:bg-blue-700 text-xs"
           >
             {activeId ? "Update" : "Save Note"}
           </button>
@@ -142,7 +142,7 @@ function NotesSection() {
 
       {/* Notes List */}
       <div>
-        <h3 className="text-sm font-semibold text-slate-500 mb-2">Saved Notes</h3>
+        <h3 className="text-sm font-semibold text-slate-900 mb-2">Saved Notes</h3>
 
         {notes.length === 0 && (
           <p className="text-xs text-slate-400 italic">No notes saved yet.</p>
