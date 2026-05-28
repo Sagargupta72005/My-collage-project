@@ -66,7 +66,7 @@ function Signup() {
   const roles = [
     { value: "student", label: "Student", icon: "🎓" },
     { value: "teacher", label: "Teacher", icon: "🏫" },
-    { value: "professional", label: "Professional", icon: "💼" },
+    // { value: "professional", label: "Professional", icon: "💼" },
   ];
 
   return (
