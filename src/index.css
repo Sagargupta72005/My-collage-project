@@ -47,8 +47,5 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
-}
-
-body {
+  background: var(--third-gradient);
 }

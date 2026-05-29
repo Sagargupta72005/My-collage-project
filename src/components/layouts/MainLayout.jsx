@@ -6,16 +6,14 @@ function MainLayout({ children }) {
 
   const [open, setOpen] =
     useState(false);
-
   // SEARCH
   const [search, setSearch] =
     useState("");
-
   return (
     <div
       className="
         relative flex h-screen w-full overflow-hidden font-xl
-        text-black bg(--primary-color)"
+        text-black "
     >
 
       {/* BACKGROUND GLOW */}
@@ -60,7 +58,7 @@ function MainLayout({ children }) {
         }}
         transition={{
           duration: 0.5,
-          ease: "easeOut",
+          ease: "easeInOut",
         }}
         className="
           flex-1 flex flex-col overflow-hidden

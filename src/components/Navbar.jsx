@@ -15,12 +15,9 @@ function Navbar({ onMenuClick, search, setSearch }) {
         gap-4
         px-6 md:px-6
         py-5
-
         bg-white/5
         backdrop-blur-2xl
-
         border-b border-white/10
-
         shadow-lg
       "
     >
@@ -48,7 +45,6 @@ function Navbar({ onMenuClick, search, setSearch }) {
             className="
               text-xl md:text-2xl
               font-bold
-
               bg-gradient-to-r
               from-orange-300
               to-pink-400
@@ -60,7 +56,7 @@ function Navbar({ onMenuClick, search, setSearch }) {
             Dashboard
           </h2>
 
-          <p className="text-xs text-white/50 uppercase tracking-[2px]">
+          <p className="text-xs text-black uppercase tracking-[2px]">
             {/* {role} */}
              workspace
           </p>

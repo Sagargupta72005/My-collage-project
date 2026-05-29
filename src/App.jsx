@@ -173,10 +173,9 @@ function App() {
         logout,
       }}
     >
-      <div className="selection:bg-yellow-100 bg-white dark:bg-slate-900 min-h-screen transition-colors">
+      <div className="selection:bg-yellow-100 bg-white min-h-screen transition-colors">
 
         <Routes>
-
           {/* ROOT */}
           <Route
             path="/"
@@ -194,7 +193,6 @@ function App() {
               )
             }
           />
-
           {/* LOGIN */}
           <Route
             path="/login"
