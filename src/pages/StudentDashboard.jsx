@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import MainLayout from "../components/layouts/MainLayout";
 import WeeklyChart from "../components/WeeklyChart";
-// import SubjectStats from "../components/teacher/SubjectStats";
 import DashboardTabs from "../components/student/DashboardTabs";
 
 function StudentDashboard() {
@@ -10,53 +9,85 @@ function StudentDashboard() {
 
   const [tasks, setTasks] = useState([]);
   const [notifications, setNotifications] = useState([]);
+  const [notes, setNotes] = useState([]);
+
+  const notifiedTasks = useRef(new Set());
 
   // Load tasks
   useEffect(() => {
     const loadTasks = () => {
       try {
-        const saved = JSON.parse(localStorage.getItem(storageKey)) || [];
-        setTasks(saved);
-        // eslint-disable-next-line no-unused-vars
-      } catch (err) {
+        const raw = localStorage.getItem(storageKey);
+
+        setTasks(raw ? JSON.parse(raw) : []);
+      } catch {
         setTasks([]);
       }
     };
 
     loadTasks();
+
     window.addEventListener("storage", loadTasks);
 
-    return () => window.removeEventListener("storage", loadTasks);
+    return () => {
+      window.removeEventListener("storage", loadTasks);
+    };
   }, [storageKey]);
 
-  // Notifications logic
+  // Load notes
   useEffect(() => {
-    const notes = [];
+    try {
+      const raw = localStorage.getItem("student_notes");
+
+      setNotes(raw ? JSON.parse(raw) : []);
+    } catch {
+      setNotes([]);
+    }
+  }, []);
+
+  // Save notes
+  useEffect(() => {
+    localStorage.setItem(
+      "student_notes",
+      JSON.stringify(notes)
+    );
+  }, [notes]);
+
+  // Build notifications
+  useEffect(() => {
     const today = new Date();
+    const reminderNotes = [];
 
-    tasks.forEach((t) => {
-      if (!t.dueDate || t.done) return;
+    tasks.forEach((task) => {
+      if (!task.dueDate || task.done) return;
 
-      const due = new Date(t.dueDate);
+      const due = new Date(task.dueDate);
 
-      // Normalize dates (fix timezone issues)
       const todayStr = today.toDateString();
       const dueStr = due.toDateString();
 
-      if (due < today && todayStr !== dueStr) {
-        notes.push({ type: "overdue", text: `${t.title} is overdue` });
+      if (due < today && dueStr !== todayStr) {
+        reminderNotes.push({
+          type: "overdue",
+          text: `${task.title} is overdue`,
+        });
       } else if (dueStr === todayStr) {
-        notes.push({ type: "today", text: `${t.title} is due today` });
+        reminderNotes.push({
+          type: "today",
+          text: `${task.title} is due today`,
+        });
       }
     });
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setNotifications(notes);
+    setNotifications(reminderNotes);
   }, [tasks]);
 
-  // Ask notification permission once
+  // Ask notification permission
   useEffect(() => {
-    if ("Notification" in window && Notification.permission === "default") {
+    if (
+      "Notification" in window &&
+      Notification.permission === "default"
+    ) {
       Notification.requestPermission();
     }
   }, []);
@@ -66,16 +97,22 @@ function StudentDashboard() {
     const interval = setInterval(() => {
       const now = new Date();
 
-      tasks.forEach((t) => {
-        if (!t.dueDate || t.done) return;
+      tasks.forEach((task) => {
+        if (!task.dueDate || task.done) return;
 
-        const due = new Date(t.dueDate);
+        const due = new Date(task.dueDate);
         const diff = due - now;
 
-        if (diff > 0 && diff < 60000) {
+        if (
+          diff > 0 &&
+          diff < 60000 &&
+          !notifiedTasks.current.has(task.id)
+        ) {
+          notifiedTasks.current.add(task.id);
+
           if (Notification.permission === "granted") {
             new Notification("⏰ Task Reminder", {
-              body: `${t.title} is due soon!`,
+              body: `${task.title} is due soon!`,
             });
           }
         }
@@ -87,39 +124,52 @@ function StudentDashboard() {
 
   return (
     <MainLayout>
-      {/* HEADER */}
+      <div className="mb-6 bg-(--primary-gradient)">
+      {/* Dashboard Tabs */}
+      <DashboardTabs
+        tasks={tasks}
+        notes={notes}
+        setNotes={setNotes}
+      />
+      </div>
+      {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold  text-(--text)">Student Dashboard</h1>
-        <p className="text-sm text-(--text)">
+        <h1 className="text-2xl font-bold text-[var(--text)]">
+          Student Dashboard
+        </h1>
+
+        <p className="text-sm text-[var(--text)]">
           Track your tasks, deadlines, and progress
         </p>
       </div>
 
-      {/* STATS */}
-      <div className="mb-6">
-        <DashboardTabs tasks={tasks} />
-        {/* <StatsCards tasks={tasks} /> */}
-      </div>
-
-      {/* NOTIFICATIONS */}
+      {/* Notifications */}
       {notifications.length > 0 && (
         <div className="mb-6 grid gap-3">
-          {notifications.map((n, i) => (
+          {notifications.map((notification, index) => (
             <div
-              key={i}
+              key={index}
               className={`p-3 rounded-lg text-sm font-medium ${
-                n.type === "overdue"
+                notification.type === "overdue"
                   ? "bg-red-100 text-red-600 border border-red-200"
                   : "bg-yellow-100 text-yellow-700 border border-yellow-200"
               }`}
             >
-              {n.type === "overdue" ? "⚠️" : "⏰"} {n.text}
+              {notification.type === "overdue"
+                ? "⚠️"
+                : "⏰"}{" "}
+              {notification.text}
             </div>
           ))}
         </div>
       )}
-      <WeeklyChart tasks={tasks} />
 
+      {/* Weekly Progress */}
+      <div className="mb-6">
+        <WeeklyChart tasks={tasks} />
+      </div>
+
+      
     </MainLayout>
   );
 }
